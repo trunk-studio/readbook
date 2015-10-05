@@ -1,0 +1,13 @@
+extends ./../layout
+
+block body
+  h1 新增產品
+  #addNewProduct(data-role='page')
+    form#newProductForm(method='post', action='/api/product?responseType=view')
+      div(data-role='header', data-position='fixed')
+        a(href='/product/index', data-icon='back', data-iconpos='notext') 返回
+      - var product = { name: '', description: '' , stockQuantity: '', price: '', image:'' }
+      include productForm.jade
+      fieldset.ui-grid-a
+        .ui-block-b
+          button 新增
