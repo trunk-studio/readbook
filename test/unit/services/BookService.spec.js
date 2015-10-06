@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-describe("about book service =>", () => {
+describe("about BookService =>", () => {
 
   let createdBook, createdBook2;
 
