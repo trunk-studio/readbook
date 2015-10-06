@@ -1,10 +1,10 @@
 import moment from 'moment';
 
-describe.only("about book service =>", () => {
+describe("about book service =>", () => {
 
   let createdBook, createdBook2;
 
-  // before
+  /* ================================ before ================================ */
   before(async (done) => {
     try {
       // create books
@@ -36,7 +36,8 @@ describe.only("about book service =>", () => {
       done(e);
     }
   });
-  // end before
+
+  /* ============================== start test ============================== */
 
   // query-all
   it('list all books',async (done) => {
