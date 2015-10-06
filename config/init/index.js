@@ -635,6 +635,27 @@ module.exports = {
       return await db.Shipping.create(testData);
     });
     // end creare shipping
+
+    // create books
+    let testBooks = [{
+      uuid: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
+      name: 'APPLE',
+      desc: 'a book about apple',
+      author: 'Steve Jobs',
+      pages: '100',
+      location: '/a/1/a1tw-32sd-23dfs-3f24-sdff-fs3s',
+      isPublish: true
+    },{
+      uuid: 'h34v-fs3s-23dfs-fs3s-23dfs-3f24',
+      name: 'Google',
+      desc: 'a book about google',
+      author: 'eric schmidt',
+      pages: '100',
+      location: '/h/3/h34v-32sd-23dfs-3f24-sdff-fs3s',
+      isPublish: true
+    }];
+    await* testBooks.map((testBook) => db.Book.create(testBook));
+    // end
   }
   // end testData
 }
