@@ -1,0 +1,75 @@
+extends ./../_layout_single
+
+block body
+  div.container
+    div.page-header
+      h1 付款確認表單
+
+    if !order.paymentIsConfirmed
+      p 請輸入「匯款人姓名」及「轉帳帳號後五碼」
+      form
+        div.form-group
+          label 訂單編號
+          p #{order.serialNumber}
+          div.form-group
+            label 訂單金額
+            p 新台幣 $#{order.paymentTotalAmount} 元整
+        div.form-group
+          label 付款日期（年/月/日）
+          input.form-control.datepicker(name='paymentConfirmDate', value=sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD'))
+        div.form-group
+          label 匯款人姓名
+          input.form-control(name='paymentConfirmName', value='')
+        div.form-group
+          label 轉帳帳號後五碼（轉帳或匯款者請填寫，若無摺存款僅需填寫匯款人姓名）
+          input.form-control(name='paymentConfirmPostfix', value='')
+        div.form-group
+          label 匯款金額
+          input.form-control(name='paymentConfirmAmount', value='')
+        button.btn.btn-primary.submit-action(type='button') 確認送出
+    else
+      p 此筆訂單（#{order.serialNumber}）已經於 #{sails.moment(order.paymentConfirmDate).format('YYYY/MM/DD')} 填寫付款確認
+    hr
+    div.text-center
+      p #{sails.config.store.name} &copy; 版權所有
+block scripts
+  script(type='text/javascript').
+    $(function() {
+
+      $('input.datepicker').datepicker({format: 'yyyy/mm/dd', autoclose: true});
+      $('button.submit-action').click(function(e) {
+        e.preventDefault();
+
+        var paymentConfirmDate = $('input[name=paymentConfirmDate]').val();
+        var paymentConfirmName = $('input[name=paymentConfirmName]').val();
+        var paymentConfirmPostfix = $('input[name=paymentConfirmPostfix]').val();
+
+        if (!paymentConfirmDate || !paymentConfirmName || !paymentConfirmPostfix) {
+          bootbox.alert('必須填寫完整資訊。');
+          return false;
+        }
+
+        $.ajax({
+          url: '/order/paymentConfirmSave?serial=#{order.serialNumber}',
+          method: "POST",
+          data: {
+            paymentConfirmDate : paymentConfirmDate,
+            paymentConfirmName : $('input[name=paymentConfirmName]').val(),
+            paymentConfirmAmount  : $('input[name=paymentConfirmAmount]').val(),
+            paymentConfirmPostfix : $('input[name=paymentConfirmPostfix]').val()
+          }
+        }).done(function() {
+          bootbox.alert('資料已儲存，我們會盡快確認此筆款項。');
+
+          location.reload();
+
+          $('button.submit-action')
+            .text('已送出')
+            .attr('disabled', 'true')
+            .prepend('<i class="zmdi zmdi-check"></i> ');
+        });
+
+        return false;
+      });
+
+    });

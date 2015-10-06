@@ -1,0 +1,138 @@
+// modal-control-shop-type-lg
+#modal-control-shop-type-lg.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 大館別設定
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form(action='/admin/department/update', method='POST')
+          .form-group.m-bottom-6
+            label 大館別名稱
+            input.form-control(id='lg' type='text', name='name', required='true' )
+            input.form-control(id='lg-id' type='hidden', name='id', required='true' )
+          // /form-group2
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
+
+// /modal
+// modal-control-shop-type-sm
+#modal-control-shop-type-sm.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 小館別新增
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form(action='/admin/department/sub/create', method='POST')
+          .form-group.m-bottom-6
+            label 小館別名稱
+            input.form-control(id='sm', type='text', name='subDptName', required='true')
+            // TODO, have to dynamic update dpt id
+            input(id='sm-id',type='hidden', name='dptId', value='1', required='true')
+          // /form-group
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
+
+#modal-control-shop-type-sm-update.modal.fade
+  .modal-dialog(role='document')
+    .modal-content
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 小館別設定
+      // /modal-header
+      .modal-body.p-30.p-top-0.font-size-slarge
+        form(action='/admin/department/sub/update', method='POST')
+          .form-group.m-bottom-6
+            label 小館別名稱
+            input.form-control(id='set-sm', type='text', name='name', required='true')
+            // TODO, have to dynamic update dpt id
+            input(id='set-sm-id',type='hidden', name='id', required='true')
+          // /form-group
+          input.btn.btn-danger(type='submit', name='submit', value='確定')
+
+#modal-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將此 
+          span.subDptName 
+          | 刪除？
+        //- p 您確定要將此 XXXXXXX 移出此折扣活動？
+      // /modal-body
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') 取消
+        form(action='/admin/department/sub/delete', method='POST')
+          input(id='del-sm-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
+
+#modal-FAQ-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.FAQTitle          
+          | 刪除？
+      // /modal-body
+      .modal-footer
+        form(action='/admin/FAQDelete', method='POST')
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          input(id='del-FAQ-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
+#modal-FAQType-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.FAQTypeTitle          
+          | 刪除？
+      // /modal-body
+      .modal-footer
+        form(action='/admin/FAQTypeDelete', method='POST')
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          input(id='del-FAQType-id',type='hidden', name='id', required='true',value="")
+          button.btn.btn-green(type='submit') 確定
+      // /modal-footer
+    // /modal-content
+  // /modal-dialog
+// /modal
+#modal-brand-delete.modal.fade
+  .modal-dialog(role='document')
+    .modal-content.font-size-slarge
+      .modal-header.p-30
+        button.close(type='button', data-dismiss='modal', aria-label='Close')
+          span(aria-hidden='true') ×
+        h2.modal-title 刪除
+      // /modal-header
+      .modal-body.p-30.p-top-0
+        p 您確定要將
+          span.brandName
+          | 刪除？
+        //- p 您確定要將此 XXXXXXX 移出此折扣活動？
+      // /modal-body
+      .modal-footer
+        form(action='/admin/brands/delete/', method='POST')
+          button.btn.btn-default(type='button', data-dismiss='modal') 取消
+          input(type='hidden', name='id', required='true',value="",id='brandId')
+          button.btn.btn-green(type='submit') 確定
+//
+  Footer
+  ==================================================
