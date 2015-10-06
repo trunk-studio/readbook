@@ -16,7 +16,10 @@ module.exports = (sequelize, DataTypes) ->
     }
 
     # status
-    isPublish: DataTypes.BOOLEAN
+    isPublish: {
+      type: DataTypes.BOOLEAN
+      defaultValue: true
+    }
     viewCount: {
       type: DataTypes.INTEGER
       defaultValue: 0
