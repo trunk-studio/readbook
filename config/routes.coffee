@@ -76,7 +76,10 @@ module.exports.routes = {
   'post /admin/brands/update' : 'BrandController.update'
   'post /admin/brands/delete/' : 'BrandController.delete'
 
-  # goods - books
+  # books
+  'get /admin/books' : 'BookController.list'
+  
+  # goods
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'
   'post /admin/goods/update' : 'ProductController.doUpdate'
@@ -319,7 +322,7 @@ module.exports.routes = {
     #   }
     # }
 
-  }
+  # }
 
   ###*
     UserController
@@ -449,10 +452,13 @@ module.exports.routes = {
      credentials: false
     }
   }
-}
 
 
   "/:controller/:action/:id?": {}
+
+}
+
+
 
 ###*
 Custom routes here...                                                    *
