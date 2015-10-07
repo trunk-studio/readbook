@@ -155,7 +155,33 @@ AuthController = {
   },
   disconnect: function(req, res) {
     passport.disconnect(req, res);
-  }
+  },
+
+  forgotPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      let check = await AuthService.sendForgotMail(data.email);
+      let message = '已寄出mail，請至信箱確認';
+      return res.ok(message);
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+  newPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      await AuthService.changeForgotPassword(data);
+      return res.redirect("/shop/products");
+    } catch (e) {
+      console.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
 };
 
 module.exports = AuthController;
