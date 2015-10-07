@@ -179,7 +179,7 @@ AuthController = {
       console.error(e.stack);
       let {message} = e;
       let success = false;
-      return res.json(500,{message, success});
+      return res.redirect("/shop/products");
     }
   },
 };
