@@ -2,192 +2,190 @@ extends ../_layout_auth
 include ../mixins/pagination
 
 block body
-  h2.m-bottom-6 商品列表
+  h2.m-bottom-6 #{i18n('book-list')}
   .well.control-well.p-30.m-bottom-8
-    //- form#goodQuery.form-horizontal.with-pagination(name="searchProducts", action="/admin/goods", method="get")
-      
+    form#bookQuery.form-horizontal.with-pagination(name="searchbooks", action="/admin/books", method="get")
       +pagination-fields(page, limit)
-    
-  //-     .row.row-m
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('brand-name')}
-  //-           .col-md-8
-  //-             select.form-control(name = "brandId", data-value=query.brandId)
-  //-               option(value=-1) 所有品牌
-  //-               each brand, index in brands
-  //-                 option(value='#{brand.id}') #{brand.name}
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('categories')}
-  //-           .col-md-8
-  //-             input.form-control(type='text', name='tag', value=query.tag? query.tag: '')
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label 大館別
-  //-           .col-md-8
-  //-             select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
-  //-               option(value=-1) 所有館別
-  //-               each dpt, index in dpts
-  //-                 option(value='#{dpt.id}') #{dpt.name}
-  //-         // /form-group
-  //-       // /col-md-4
-  //-     // /row
-  //-     .row.row-m
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('product-name')}
-  //-           .col-md-8
-  //-             input.form-control(type='text', name='name', value = query.name?query.name: '')
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('product-number')}
-  //-           .col-md-8
-  //-             input.form-control(type='text', name='productNumber', value = query.productNumber?query.productNumber: '')
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label 小館別
-  //-           .col-md-8
-  //-             select.form-control(name='dptSubId', data-value=query.dptSubId)
-  //-               option(value=-1) 所有館別
-  //-               each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
-  //-                 option(value='#{dptSub.id}') #{dptSub.name}
-  //-         // /form-group
-  //-       // /col-md-4
-  //-     // /row
-  //-     .row.row-m
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('commodity-prices')}
-  //-           .col-md-8
-  //-             input.form-control(type='text', name='price', value = query.price?query.price: '')
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('current-inventory')}
-  //-           .col-md-3.p-right-0
-  //-             input.form-control(type='number', name='stockQuantityStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
-  //-           .col-md-2.p-left-0.p-right-0.text-center
-  //-             p.form-control-static #{i18n('to')}
-  //-           .col-md-3.p-left-0
-  //-             input.form-control(type='number', name='stockQuantityEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
-  //-         // /form-group
-  //-       // /col-md-4
-  //-     // /row
-  //-     .row.row-m
-  //-       .col-md-4
-  //-         .form-group
-  //-           label.col-md-4.control-label #{i18n('trafficking-in-state')}
-  //-           .col-md-8
-  //-             select.form-control(name="isPublish", data-value=(query.isPublish!='')?query.isPublish: '')
-  //-               option(value='') 所有狀態
-  //-               option(value='false') 隱藏
-  //-               option(value='true') 上架
-  //-         // /form-group
-  //-       // /col-md-4
-  //-       .col-md-8
-  //-         .form-group
-  //-           label.col-md-2.control-label #{i18n('filing-date')}
-  //-           .col-md-4
-  //-             input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
-  //-           .col-md-2.text-center
-  //-             p.form-control-static #{i18n('to')}
-  //-           .col-md-4
-  //-             input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
-  //-         // /form-group
-  //-       // /col-md-7
-  //-       .col-md-12.text-right
-  //-         a.btn.btn-primary(onClick='$("form[name=\'searchProducts\']").submit()') 查詢
-  //-       // /col-md-12
-  //-     // /row
-  //-   // /form-horizontal
-  //- // /well
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label #{i18n('site-name')}
+            .col-md-8
+              select.form-control(name = "siteId", data-value=query.siteId)
+                option(value=-1) #{i18n('site-all')}
+                each site, index in sites
+                  option(value='#{site.id}') #{site.name}
+          // /form-group
+        // /col-md-4
+        //- .col-md-4
+        //-   .form-group
+        //-     label.col-md-4.control-label #{i18n('categories')}
+        //-     .col-md-8
+        //-       input.form-control(type='text', name='tag', value=query.tag? query.tag: '')
+          // /form-group
+        // /col-md-4
+      //-   .col-md-4
+      //-     .form-group
+      //-       label.col-md-4.control-label 大館別
+      //-       .col-md-8
+      //-         select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
+      //-           option(value=-1) 所有館別
+      //-           each dpt, index in dpts
+      //-             option(value='#{dpt.id}') #{dpt.name}
+      //-     // /form-group
+      //-   // /col-md-4
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label #{i18n('book-name')}
+            .col-md-8
+              input.form-control(type='text', name='name', value = query.name?query.name: '')
+          // /form-group
+        // /col-md-4
+        .col-md-4
+          .form-group
+              label.col-md-4.control-label #{i18n('book-author')}
+            .col-md-8
+              input.form-control(type='text', name='author', value = query.author?query.author: '')
+          // /form-group
+        // /col-md-4
+        //- .col-md-4
+        //-   .form-group
+        //-     label.col-md-4.control-label 小館別
+        //-     .col-md-8
+        //-       select.form-control(name='dptSubId', data-value=query.dptSubId)
+        //-         option(value=-1) 所有館別
+        //-         each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
+        //-           option(value='#{dptSub.id}') #{dptSub.name}
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+        //- .col-md-4
+        //-   .form-group
+        //-     label.col-md-4.control-label #{i18n('commodity-prices')}
+        //-     .col-md-8
+        //-       input.form-control(type='text', name='price', value = query.price?query.price: '')
+        //-   // /form-group
+        //- // /col-md-4
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label book-pages
+            .col-md-3.p-right-0
+              input.form-control(type='number', name='pagesStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
+            .col-md-2.p-left-0.p-right-0.text-center
+              p.form-control-static to
+            .col-md-3.p-left-0
+              input.form-control(type='number', name='pagesEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label #{i18n('publish-status')}
+            .col-md-8
+              select.form-control(name="isPublish", data-value=(query.isPublish!='')?query.isPublish: '')
+                option(value='') #{i18n('publish-status')}
+                option(value='false') #{i18n('publish-false')}
+                option(value='true') #{i18n('publish-true')}
+          // /form-group
+        // /col-md-4
+        .col-md-8
+          .form-group
+            label.col-md-2.control-label #{i18n('filing-date')}
+            .col-md-4
+              input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
+            .col-md-2.text-center
+              p.form-control-static #{i18n('to')}
+            .col-md-4
+              input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
+          // /form-group
+        // /col-md-7
+        .col-md-12.text-right
+          a.btn.btn-primary(onClick='$("form[name=\'searchbooks\']").submit()') #{i18n('inquire')}
+        // /col-md-12
+      // /row
+    // /form-horizontal
+  // /well
   .row
     .col-md-6
       form.form-inline
         .form-group
-          label 顯示
+          label #{i18n('rows-show')}
           +pagination-limit
-          label 筆資料（共 #{totalRows} 筆）
+          label #{i18n('rows-total-datas')}（#{i18n('rows-total')} #{totalRows} #{i18n('rows-data')}）
     .col-md-6.desktop-text-right
-      a.btn.btn-green(href='#', id='btnSave') 儲存變更
+      a.btn.btn-green(href='#', id='btnSave') #{i18n('save-changes')}
     // /col-md-6
   // /row
   hr.dashed-line
   table.table.table-striped
     thead
       tr
-        th 主圖
+        th book-cover
         th
-          | 商品名稱
+          | book-name
           span.caret
         th.width-12
-          | 售價
+          | #{i18n('book-author')}
           span.caret
         th.width-120
-          | 貨號
+          | #{i18n('book-desc')}
           span.caret
         th.width-120
-          | 建檔日期
+          | #{i18n('book-createdAt')}
           span.caret
         th.width-120
-          | 狀態
+          | #{i18n('book-isPublish')}
           span.caret
         th.width-120
-          | 目前庫存
+          | #{i18n('book-pages')}
           span.caret
         th
     tbody
-      if (Object.keys(products).length == 0)
+      if (Object.keys(books).length == 0)
         script.
           alert('找不到符合的商品')
-      each product in products
-        //- - try { var photo = JSON.parse(product.photos) } catch (e){ var photo = []; };
+      each book in books
+        //- - try { var photo = JSON.parse(book.photos) } catch (e){ var photo = []; };
         tr
           td
-            img.width-6(src=product.photos[0])
-          - var name = (product.name && product.name.length > 0) ? "(" + product.name + ")" : "";
-          td #{product.ProductGm.name} #{name}
-          td #{product.price}
-          td #{product.productNumber}
-          td #{product.createdAt}
+            img.width-6(src=book.cover[0])
+          - var name = (book.name && book.name.length > 0) ? "(" + book.name + ")" : "";
+          td #{book.name} #{name}
+          td #{book.author}
+          td #{book.desc}
+          td #{book.createdAt}
           td
-            .btn-group.btn-group-switch(data-toggle='buttons', id='#{product.id}')
-              label.btn.btn-default.btn-hide.btn-sm(class=!product.isPublish ? "active" : "")
-                input#option-unpublish(type='radio', name='options', autocomplete='off', checked=product.isPublish?'checked':undefined, value='0')
-                span.btn-text 隱藏
-              label.btn.btn-default.btn-sm(class=product.isPublish ? "active" : "")
-                input#option-publish(type='radio', name='options', autocomplete='off', checked=product.isPublish?'checked':undefined, value='1')
-                span.btn-text 上架
+            .btn-group.btn-group-switch(data-toggle='buttons', id='#{book.id}')
+              label.btn.btn-default.btn-hide.btn-sm(class=!book.isPublish ? "active" : "")
+                input#option-unpublish(type='radio', name='options', autocomplete='off', checked=book.isPublish?'checked':undefined, value='0')
+                span.btn-text #{i18n('publish-false')}
+              label.btn.btn-default.btn-sm(class=book.isPublish ? "active" : "")
+                input#option-publish(type='radio', name='options', autocomplete='off', checked=book.isPublish?'checked':undefined, value='1')
+                span.btn-text #{i18n('publish-true')}
 
             // /btn-group-switch
-          td #{product.stockQuantity}
+          td #{book.pages}
             //- .input-group.input-group-count.input-group-sm.max-width-100
             //-   span.input-group-btn
             //-     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
             //-       span.glyphicon.glyphicon-minus
               // /input-group-btn
-              //- input.form-control.input-number.text-center(type='text', name='quant[#{product.id}]', value='#{product.stockQuantity}', min='1', max='999')
+              //- input.form-control.input-number.text-center(type='text', name='quant[#{book.id}]', value='#{book.stockQuantity}', min='1', max='999')
               //- span.input-group-btn
-              //-   button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[#{product.id}]')
+              //-   button.btn.btn-default.btn-number(type='button', data-type='plus', data-field='quant[#{book.id}]')
               //-     span.glyphicon.glyphicon-plus
               // /input-group-btn
             // /input-group
           td.text-right
-            a.btn.btn-link(href='/admin/goods/update?id=#{product.ProductGmId}')
+            a.btn.btn-link(href='/admin/books/update?id=#{book.pages}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   +pagination-simple-pager(page, totalPages)
 
 block js
-  script(src='/javascripts/admin/goodList.js')
+  script(src='/javascripts/admin/bookList.js')
   script(src='/javascripts/common/pagination.js')

@@ -1,4 +1,7 @@
 import moment from "moment";
+import fs from 'fs';
+import mime from "mime";
+import util from "util";
 
 module.exports = {
 
@@ -8,37 +11,38 @@ module.exports = {
     let queryObjArray = [],
         queryObj = {},
         SiteQueryObj = {},
+        SiteModel,
+        HostQueryObj = {},
+        HostModel,
         BookQueryObj = {},
         resultBooks = [];
 
     try {
-      // query-conditions
+      /* ================= query-conditions ================= */
       if (Object.keys(query).length > 0) {
-        // query-by-name
+        /* =============== query-by-name ==================== */
         if (query.name) {
           BookQueryObj.name = {
               $like: `%${query.name}%`
           }
         }
-        // query-by-author
+        /* =============== query-by-author ================== */
         if (query.author) {
           BookQueryObj.author = {
               $like: `%${query.author}%`
           }
         }
-        // query-by-site
-        if (query.author) {
-          SiteQueryObj.name = {
-              $like: `%${query.site}%`
-          }
-        }
-        // query-by-isPublish
+        /* =============== query-by-publish-status ========== */
         // 販售狀態 1:隱藏, 2:上架
         if (query.isPublish != '') {
           queryObj.isPublish = (query.isPublish == 'false') ? null : true;
         }
         if (typeof query.isPublish != 'undefined') {
           BookQueryObj.isPublish = (query.isPublish == 'false') ? null : true;
+        }
+        /* =============== query-by-siteId =================== */
+        if (query.siteId > 0 ) {
+          SiteQueryObj.id = query.siteId;
         }
       } // end-conditions
 
@@ -47,18 +51,18 @@ module.exports = {
         subQuery: false,
         where: BookQueryObj,
         offset: offset,
-        limit: limit//,
-        // include:[{
-        //     model: db.Site,
-        //     where: DptQueryObj
-        // }]
+        limit: limit,
+        include: [{
+            model: db.Site,
+            where: SiteQueryObj
+        }]
       };
 
-      //
+      // find books with counter
       let books = await db.Book.findAndCountAll(queryObj);
 
       // mix with image
-      // books.rows = books.rows.map(BookService.withImage);
+      books.rows = books.rows.map(BookService.withImage);
 
       // format datetime
       for (let book of books.rows) {
@@ -73,6 +77,25 @@ module.exports = {
     return {rows: resultBooks.rows, count: resultBooks.count };
   },
   // end
+
+  // take-image-with-book-
+  withImage: (book) => {
+    let bookJson = book.toJSON();
+    try {
+      let src = `${__dirname}/../../assets/images/book/${product.id}.jpg`;
+      let data = fs.readFileSync(src).toString("base64");
+
+      if (data) {
+        let base64data = util.format("data:%s;base64,%s", mime.lookup(src), data);
+        booksJson.image = base64data;
+      }
+    } catch (error) {
+      console.log("BookService : withImage : can't find book " + book.id + " image");
+      bookJson.image = 'about:blank';
+    }
+    return bookJson;
+  },
+  //
 
   // start-create-a-book
   create: async (book) => {
