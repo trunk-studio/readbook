@@ -40,7 +40,16 @@ module.exports = function(sequelize, DataTypes) {
     weight: {
       type: DataTypes.INTEGER,
     }
+  },
+  {
+    paranoid: true,
+    classMethods: {
+      associate: function(models) {
+        Brand.belongsToMany(models.HostName, {
+          through: 'HostNameBrand'
+        });
+      }
+    }
   });
-
   return Brand;
 };
