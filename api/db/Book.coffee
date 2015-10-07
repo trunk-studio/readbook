@@ -1,6 +1,7 @@
 
 module.exports = (sequelize, DataTypes) ->
   Book = sequelize.define('Book', {
+
     #  basic info
     uuid: DataTypes.STRING
     name: DataTypes.STRING
@@ -28,6 +29,7 @@ module.exports = (sequelize, DataTypes) ->
   },
   paranoid: true,
   classMethods: associate: (models) ->
+    Book.belongsToMany(models.Brand, {through: 'BrandBook'});
 
     return
   )
