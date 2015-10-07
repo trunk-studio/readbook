@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) ->
   },
   paranoid: true,
   classMethods: associate: (models) ->
-    Book.belongsToMany(models.Brand, {through: 'BrandBook'});
+    Book.belongsToMany(models.Site, {through: 'SiteBook'});
 
     return
   )

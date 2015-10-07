@@ -1,7 +1,7 @@
 
 module.exports = function(sequelize, DataTypes) {
 
-  var Brand = sequelize.define('Brand', {
+  var Site = sequelize.define('Site', {
 
     // 品牌大頭照
     avatar: DataTypes.STRING,
@@ -40,6 +40,16 @@ module.exports = function(sequelize, DataTypes) {
     weight: {
       type: DataTypes.INTEGER,
     }
+  },
+  {
+    paranoid: true,
+    classMethods: {
+      associate: function(models) {
+        Site.belongsToMany(models.Host, {
+          through: 'HostSite'
+        });
+      }
+    }
   });
-  return Brand;
+  return Site;
 };
