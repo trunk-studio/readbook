@@ -29,6 +29,8 @@ etc. depending on your default view engine) your home page.              *
 ###
 module.exports.routes = {
   "/": 'MainController.index'
+
+  # auth
   'get /login': 'AuthController.login'
   'get /logout': 'AuthController.logout'
   'get /register' : 'AuthController.register'
@@ -78,7 +80,7 @@ module.exports.routes = {
 
   # books
   'get /admin/books' : 'BookController.list'
-  
+
   # goods
   'get /admin/goods' : 'ProductController.list'
   'get /admin/goods/update' : 'ProductController.showUpdate'
