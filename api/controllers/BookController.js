@@ -1,82 +1,45 @@
 module.exports = {
 
-  // get shipping fee and region
-  type: async(req,res) => {
-    // let type = req.body.type;
-      let type = req.param("type");;
-    console.log('=== ShopController : type ==>',type);
-    try {
-      let shippings = await ShippingService.findBy(type);
-      return res.ok({shippings});
-    } catch (e) {
-      console.error(e.stack);
-      let {message} = e;
-      let success = false;
-      return res.serverError({message, success});
-    }
-  },
-  // end
-
-  //  list all
+  // list all goods result, include query items
   list: async (req, res) => {
+    let query = req.query;
+    console.log('=== input query ==>\n',query);
     try {
-      // get query first!
-      let responseType = req.query.responseType;
-      // then get data.
-      let shippings = await ShippingService.findAll();
-      // output by demanded
-      let types = [ 'delivery', 'postoffice' ];
+      // pagination
+      let limit = await pagination.limit(req);
+      let page = await pagination.page(req);
+      let offset = await pagination.offset(req);
+
+      // find all sites
+      let sites = await db.Site.findAll();
+
+      // book processing
+      let booksWithCount = await BookService.bookQuery(query, offset, limit);
+      let books = booksWithCount.rows;
+
+      // marge output
       let result = {
-        shippings,
-        types,
-        pageName: '/admin/shipping'
+        query,
+        sites,
+        books,
+        pageName: "/admin/books",
+        limit: limit,
+        page: page,
+        totalPages: Math.ceil(booksWithCount.count / limit),
+        totalRows: booksWithCount.count
       };
-      if (responseType != undefined && responseType.toLowerCase() == 'json') {
-        return res.ok(shippings);
-      }else{
-        return res.view('admin/shipping', result);
-      }
-    } catch (error) {
-      console.error(error.stack);
-      let msg = error.message;
-      return res.serverError({msg});
-    }
-  },
-  // end list all
 
-  // save all
-  save: async (req, res) => {
-    try {
-      // get query first!
-      let responseType = req.query.responseType;
-
-      // output by demanded
-      if (responseType != undefined && responseType.toLowerCase() == 'json') {
-        // get data set and save.
-        let shippings = req.body;
-        // console.log('=== shippings ==>\n',shippings);
-        let savedShippings = await ShippingService.saveAll(shippings);
-
-        return res.ok(savedShippings);
-      }else{
-        // get data set and save.
-        let shippings = req.body.shippings;
-        // console.log('=== shippings ==>\n',shippings);
-        let savedShippings = await ShippingService.saveAll(shippings);
-        shippings = await ShippingService.findAll();
-        let types = [ 'delivery', 'postoffice' ];
-        return res.view('admin/shipping', {
-          shippings,
-          types,
-          pageName: '/admin/shipping'
-        });
-      }
+      // this is for multiple-output
+      if (query.responseType && query.responseType.toLowerCase() == 'json')
+        return res.ok(result);
+      else
+        return res.view('admin/bookList', result);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
       return res.serverError({msg});
     }
   }
-  // end save all
+
 
 }

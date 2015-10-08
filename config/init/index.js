@@ -1,5 +1,7 @@
 import trunk from './trunk'
 import exma from './exma'
+
+
 let production;
 try {
   production = require('./production');
@@ -85,42 +87,6 @@ module.exports = {
     ];
 
     await db.Like.bulkCreate(like);
-
-    var roleUser = {
-      authority: 'user',
-      comment: 'site user'
-    };
-    var createRoleUser = await db.Role.create(roleUser);
-
-    var initAbout = {
-      brandVision: '請輸入品牌願景',
-      productPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg'],
-      aboutCompany: '請輸入公司簡介',
-      dealerPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg'],
-      dealerNames: ['商店一', '商店二']
-    };
-    var createAbout = await db.About.create(initAbout);
-
-    var newBuyer = {
-      username: "buyer",
-      email: "smlsun@gmail.com",
-      password: "buyer",
-      RoleId: createRoleUser.id,
-      comment: "this is a newBuyer",
-      orderSyncToken:'11111',
-      mobile: '0937397377'
-    };
-    var createNewBuyer = await db.User.create(newBuyer);
-
-    var newBuyer2 = {
-      username: "buyer2",
-      email: "buyer2@gmail.com",
-      password: "buyer2",
-      RoleId: createRoleUser.id,
-      comment: "this is newBuyer2"
-    };
-    var createNewBuyer2 = await db.User.create(newBuyer2);
-
     var brandExample = [{
       name: '星球精選品牌',
       avatar: 'https://cldup.com/sYD4KQMADm.jpg',
@@ -142,9 +108,7 @@ module.exports = {
       'http://goo.gl/p9Y2BF'
       ]
     }];
-
     var brand = await db.Brand.bulkCreate(brandExample);
-
 
     var brandAgent = [{
       name: '好代理品牌',
@@ -167,6 +131,7 @@ module.exports = {
       'http://goo.gl/p9Y2BF'
       ]
     }];
+    var brandAgent = await db.Brand.bulkCreate(brandAgent);
 
     var otherAgent = {
       name: 'Other',
@@ -176,10 +141,25 @@ module.exports = {
       banner: '',
       photos: []
     };
-
-    var brandAgent = await db.Brand.bulkCreate(brandAgent);
-
     var otherAgent = await db.Brand.create(otherAgent);
+
+
+
+    var roleUser = {
+      authority: 'user',
+      comment: 'site user'
+    };
+    var createRoleUser = await db.Role.create(roleUser);
+
+    var initAbout = {
+      brandVision: '請輸入品牌願景',
+      productPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/about.jpg'],
+      aboutCompany: '請輸入公司簡介',
+      dealerPhotos: ['https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg','https://dl.dropboxusercontent.com/u/9662264/iplusdeal/images/demo/logo-dealers-1.jpg'],
+      dealerNames: ['商店一', '商店二']
+    };
+    var createAbout = await db.About.create(initAbout);
+
 
     let FAQTypes = ['會員常見問題','購物常見問題','配送取貨問題','退換貨及退款','發票常見問題','海外會員訂購','產品保養問題'];
 
@@ -362,6 +342,24 @@ module.exports = {
 
     //let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
     //let transaction = await db.sequelize.transaction({isolationLevel});
+
+    let newBuyer = await db.User.create({
+      username: "buyer",
+      email: "smlsun@gmail.com",
+      password: "buyer",
+      RoleId: createRoleUser.id,
+      comment: "this is a newBuyer",
+      orderSyncToken:'11111',
+      mobile: '0937397377'
+    });
+
+    let newBuyer2 = await db.User.create({
+      username: "buyer2",
+      email: "buyer2@gmail.com",
+      password: "buyer2",
+      RoleId: createRoleUser.id,
+      comment: "this is newBuyer2"
+    });
 
     // Greeting Message to New Buyer
     var mail = CustomMailerService.greeting(newBuyer);
@@ -635,6 +633,33 @@ module.exports = {
       return await db.Shipping.create(testData);
     });
     // end creare shipping
+
+    /*
+
+      Import test/basic data from each js files.
+
+    */
+
+    // // import brands
+    // let testBrands = require('./data/brands.js');
+    // await testBrands.import();
+    //
+    // // import hostnames
+    // let testHostNames = require('./data/hpstnames.js');
+    // await testHostNames.import();
+
+    // import roles
+    // let testRoles = require('./data/roles.js');
+    // await testRoles.import();
+
+    // import users
+    // let testUsers = require('./data/users.js');
+    // await testUsers.Import();
+
+    // import books
+    let testBooks = require('./data/books.js');
+    await testBooks.import();
+
   }
   // end testData
 }
