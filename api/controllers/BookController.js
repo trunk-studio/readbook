@@ -3,6 +3,7 @@ module.exports = {
   // list all goods result, include query items
   list: async (req, res) => {
     let query = req.query;
+    console.log('=== input query ==>\n',query);
     try {
       // pagination
       let limit = await pagination.limit(req);
@@ -12,11 +13,11 @@ module.exports = {
       // find all sites
       let sites = await db.Site.findAll();
 
-      // books
+      // book processing
       let booksWithCount = await BookService.bookQuery(query, offset, limit);
       let books = booksWithCount.rows;
 
-      //
+      // marge output
       let result = {
         query,
         sites,
@@ -28,12 +29,11 @@ module.exports = {
         totalRows: booksWithCount.count
       };
 
-      //
+      // this is for multiple-output
       if (query.responseType && query.responseType.toLowerCase() == 'json')
         return res.ok(result);
-
-      //
-      return res.view('admin/bookList', result);
+      else
+        return res.view('admin/bookList', result);
     } catch (error) {
       console.error(error.stack);
       let msg = error.message;
