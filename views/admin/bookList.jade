@@ -14,7 +14,7 @@ block body
               select.form-control(name = "siteId", data-value=query.siteId)
                 option(value=-1) #{i18n('site-all')}
                 each site, index in sites
-                  option(value='#{site.id}') #{site.name}
+                  option(value='#{site.id}',selected=site.id == query.siteId) #{site.name}
           // /form-group
         // /col-md-4
         //- .col-md-4
@@ -71,13 +71,13 @@ block body
         //- // /col-md-4
         .col-md-4
           .form-group
-            label.col-md-4.control-label book-pages
+            label.col-md-4.control-label #{i18n('book-pages')}
             .col-md-3.p-right-0
-              input.form-control(type='number', name='pagesStart', value = query.stockQuantityStart?query.stockQuantityStart: '')
+              input.form-control(type='number', name='pagesStart', value = query.pagesStart?query.pagesStart: '')
             .col-md-2.p-left-0.p-right-0.text-center
-              p.form-control-static to
+              p.form-control-static #{i18n('to')}
             .col-md-3.p-left-0
-              input.form-control(type='number', name='pagesEnd', value = query.stockQuantityEnd?query.stockQuantityEnd: '')
+              input.form-control(type='number', name='pagesEnd', value = query.pagesEnd?query.pagesEnd: '')
           // /form-group
         // /col-md-4
       // /row
@@ -115,7 +115,7 @@ block body
         .form-group
           label #{i18n('rows-show')}
           +pagination-limit
-          label #{i18n('rows-total-datas')}（#{i18n('rows-total')} #{totalRows} #{i18n('rows-data')}）
+          label #{i18n('rows-total-datas')}（#{i18n('rows-entire')} #{totalRows} #{i18n('rows-data')}）
     .col-md-6.desktop-text-right
       a.btn.btn-green(href='#', id='btnSave') #{i18n('save-changes')}
     // /col-md-6
@@ -124,9 +124,9 @@ block body
   table.table.table-striped
     thead
       tr
-        th book-cover
+        th #{i18n('book-cover')}
         th
-          | book-name
+          | #{i18n('book-name')}
           span.caret
         th.width-12
           | #{i18n('book-author')}
