@@ -17,71 +17,6 @@ block body
                   option(value='#{site.id}',selected=site.id == query.siteId) #{site.name}
           // /form-group
         // /col-md-4
-        //- .col-md-4
-        //-   .form-group
-        //-     label.col-md-4.control-label #{i18n('categories')}
-        //-     .col-md-8
-        //-       input.form-control(type='text', name='tag', value=query.tag? query.tag: '')
-          // /form-group
-        // /col-md-4
-        .col-md-4  
-          .form-group
-              label.col-md-4.control-label #{i18n('book-author')}
-            .col-md-8
-              input.form-control(type='text', name='author', value = query.author?query.author: '')
-              // /form-group
-        // /col-md-4
-      // /row
-      .row.row-m
-        .col-md-4
-          .form-group
-            label.col-md-4.control-label #{i18n('book-name')}
-            .col-md-8
-              input.form-control(type='text', name='name', value = query.name?query.name: '')
-          // /form-group
-        // /col-md-4
-        .col-md-4
-          //- .form-group
-          //-   label.col-md-4.control-label 大館別
-          //-   .col-md-8
-          //-     select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
-          //-       option(value=-1) 所有館別
-          //-       each dpt, index in dpts
-          //-         option(value='#{dpt.id}') #{dpt.name}
-          // /form-group
-        // /col-md-4
-        .col-md-4
-        //-   .form-group
-        //-     label.col-md-4.control-label 小館別
-        //-     .col-md-8
-        //-       select.form-control(name='dptSubId', data-value=query.dptSubId)
-        //-         option(value=-1) 所有館別
-        //-         each dptSub, index in dpts[query.dptId>1?query.dptId-1:1].DptSubs
-        //-           option(value='#{dptSub.id}') #{dptSub.name}
-          // /form-group
-        // /col-md-4
-      // /row
-      .row.row-m
-        //- .col-md-4
-        //-   .form-group
-        //-     label.col-md-4.control-label #{i18n('commodity-prices')}
-        //-     .col-md-8
-        //-       input.form-control(type='text', name='price', value = query.price?query.price: '')
-        //-   // /form-group
-        //- // /col-md-4
-        .col-md-4
-          .form-group
-            label.col-md-4.control-label #{i18n('book-pages')}
-            .col-md-3.p-right-0
-              input.form-control(type='number', name='pagesStart', value = query.pagesStart?query.pagesStart: '')
-            .col-md-2.p-left-0.p-right-0.text-center
-              p.form-control-static #{i18n('to')}
-            .col-md-3.p-left-0
-              input.form-control(type='number', name='pagesEnd', value = query.pagesEnd?query.pagesEnd: '')
-          // /form-group
-        // /col-md-4
-      // /row
-      .row.row-m
         .col-md-4
           .form-group
             label.col-md-4.control-label #{i18n('publish-status')}
@@ -91,18 +26,52 @@ block body
                 option(value='false') #{i18n('publish-false')}
                 option(value='true') #{i18n('publish-true')}
           // /form-group
-        // /col-md-4
-        .col-md-8
+        // /col-md-4 
+      .row.row-m  
+        .col-md-4
           .form-group
-            label.col-md-2.control-label #{i18n('filing-date')}
-            .col-md-4
+            label.col-md-4.control-label #{i18n('book-name')}
+            .col-md-8
+              input.form-control(type='text', name='name', value = query.name?query.name: '')
+          // /form-group
+        // /col-md-4  
+        .col-md-4  
+          .form-group
+            label.col-md-4.control-label #{i18n('book-author')}
+            .col-md-8
+              input.form-control(type='text', name='author', value = query.author?query.author: '')
+          // /form-group
+        // /col-md-4
+      // /row
+      .row.row-m
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label #{i18n('filing-date')}
+            .col-md-8
               input.form-control(type='date', name='dateFrom', value=query.dateFrom?query.dateFrom:null)
-            .col-md-2.text-center
-              p.form-control-static #{i18n('to')}
-            .col-md-4
+          // /form-group
+        // /col-md-4 
+        .col-md-4
+           .form-group
+             label.col-md-4.control-label #{i18n('book-pages')}
+             .col-md-3.p-right-0
+               input.form-control(type='number', name='pagesStart', value = query.pagesStart?query.pagesStart: '')
+             .col-md-2.p-left-0.p-right-0.text-center
+               p.form-control-static #{i18n('to')}
+             .col-md-3.p-left-0
+               input.form-control(type='number', name='pagesEnd', value = query.pagesEnd?query.pagesEnd: '')
+           // /form-group
+         // /col-md-4   
+      // /row
+      .row.row-m
+        .col-md-4
+          .form-group
+            label.col-md-4.control-label #{i18n('to')}
+            .col-md-8
               input.form-control(type='date', name='dateEnd', value=query.dateEnd?query.dateEnd:null)
           // /form-group
-        // /col-md-7
         .col-md-12.text-right
           a.btn.btn-primary(onClick='$("form[name=\'searchbooks\']").submit()') #{i18n('inquire')}
         // /col-md-12
