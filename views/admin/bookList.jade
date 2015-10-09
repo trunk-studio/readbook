@@ -24,16 +24,13 @@ block body
         //-       input.form-control(type='text', name='tag', value=query.tag? query.tag: '')
           // /form-group
         // /col-md-4
-      //-   .col-md-4
-      //-     .form-group
-      //-       label.col-md-4.control-label 大館別
-      //-       .col-md-8
-      //-         select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
-      //-           option(value=-1) 所有館別
-      //-           each dpt, index in dpts
-      //-             option(value='#{dpt.id}') #{dpt.name}
-      //-     // /form-group
-      //-   // /col-md-4
+        .col-md-4  
+          .form-group
+              label.col-md-4.control-label #{i18n('book-author')}
+            .col-md-8
+              input.form-control(type='text', name='author', value = query.author?query.author: '')
+              // /form-group
+        // /col-md-4
       // /row
       .row.row-m
         .col-md-4
@@ -44,13 +41,16 @@ block body
           // /form-group
         // /col-md-4
         .col-md-4
-          .form-group
-              label.col-md-4.control-label #{i18n('book-author')}
-            .col-md-8
-              input.form-control(type='text', name='author', value = query.author?query.author: '')
+          //- .form-group
+          //-   label.col-md-4.control-label 大館別
+          //-   .col-md-8
+          //-     select.form-control(name='dptId', data-value=query.dptId, data-dpts=dpts, form='goodQuery')
+          //-       option(value=-1) 所有館別
+          //-       each dpt, index in dpts
+          //-         option(value='#{dpt.id}') #{dpt.name}
           // /form-group
         // /col-md-4
-        //- .col-md-4
+        .col-md-4
         //-   .form-group
         //-     label.col-md-4.control-label 小館別
         //-     .col-md-8
