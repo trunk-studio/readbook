@@ -12,8 +12,10 @@ module.exports = {
       let fileName = query.uuid;
 
       // make a fake book
-      fileLocation = 'images/book-sample';
+      fileLocation = '/images/ereader/book-sample';
       fileName = 'sample';
+
+      // merge-file-name-location-to-book-array
       var pages = [];
       var pad = function(number, length) {
         var str = '' + number;
@@ -29,7 +31,8 @@ module.exports = {
       // marge output
       let result = {
         title : bookName,
-        pages : pageTotal,
+        pages : pages,
+        pageTotal : pageTotal,
         pageName: "/ereader"
       };
       console.log('=== E-Reader: read : result ==>\n',result);

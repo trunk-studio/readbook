@@ -6,23 +6,22 @@ block body
       h1 #{title}
   #viewer
     #viewer-content.single-page 
-      {{#pages}}
-      .image-rendering.image-content(id='p{{index}}', data-url='{{url}}')
-      {{/pages}}
-    a.page-switcher.page-switcher-prev(href='#', data-transition='slide', data-direction='reverse', data-target='0', data-offset='-1', data-maximum='39')
+      each page in pages
+        .image-rendering.image-content(id='p#{page.index}', data-url='#{page.url}')
+    a.page-switcher.page-switcher-prev(href='#', data-transition='slide', data-direction='reverse', data-target='0', data-offset='-1', data-maximum='#{pageTotal}')
       i.fa.fa-chevron-left
-    a.page-switcher.page-switcher-next(href='#', data-transition='slide', data-target='1', data-offset='1', data-maximum='#{pages}')
+    a.page-switcher.page-switcher-next(href='#', data-transition='slide', data-target='1', data-offset='1', data-maximum='#{pageTotal}')
       i.fa.fa-chevron-right
     input(name='current', value='0', type='hidden')
-    input(name='maximum', value='#{pages}', type='hidden')
+    input(name='maximum', value='#{pageTotal}', type='hidden')
   footer
     .progressbar
       div(style='display: inline-block; width: 100%;')
         .page-num-display
           span#textCurrentPageNum 1
           |  /
-          span#textTotalPageNum #{pages}
-        #slider(data-min='0', data-max='#{pages}')
+          span#textTotalPageNum #{pageTotal}
+        #slider(data-min='0', data-max='#{pageTotal}')
         
 block js
   script(src='/javascripts/ereader/ereader.js')

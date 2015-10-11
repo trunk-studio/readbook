@@ -128,7 +128,18 @@ $(function () {
     };
 
    $('.image-content').click(function() {
-     $('header, footer, .page-switcher').toggle();
+     $('header, footer, .page-switcher').toggle(function(){
+
+       var status = $('header').css("display");
+       console.log('=== status ==>',status);
+       var top = $('#viewer-content').css("padding-top");
+       if( status == "none" ){
+          $('#viewer-content').css("padding-top","0px");
+        } else {
+          $('#viewer-content').css("padding-top","40px");
+        }
+
+     });
    });
 
     $('.image-content').dblclick(function() {
@@ -162,8 +173,19 @@ $(function () {
         swipeRight: swipeHandler,
         swipeRight: swipeHandler,
         tap: function(event, target) {
-            console.log('aaa');
-            $('header, footer').toggle();
+            console.log('.image-content be tapped');
+            $('header, footer').toggle(function(){
+
+              var status = $('header').css("display");
+              console.log('=== status ==>',status);
+              var top = $('#viewer-content').css("padding-top");
+              if( status == "none" ){
+                 $('#viewer-content').css("padding-top","0px");
+               } else {
+                 $('#viewer-content').css("padding-top","40px");
+               }
+
+            });
         },
         doubleTap: function(event, target) {
             //alert('double tap');
