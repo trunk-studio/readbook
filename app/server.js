@@ -1,6 +1,7 @@
 var koa = require('koa');
 var router = require('koa-router')();
 var request = require("co-request");
+// var request = require("request");
 var koaBodyParser = require('koa-bodyparser');
 var mount = require('koa-mount');
 var path = require('path');
