@@ -62,12 +62,12 @@ AuthController = {
       if(user.userLikes == undefined) user.userLikes = []
 
       if(user.email!='' && user.password == user.passwordAgain && user.fullName != '' && user.mobile != '' && user.city != '' && user.region != '' && user.zipcode != ''){
-        
+
         let userCreate = db.User.create(user);
         return res.redirect('/');
 
       } else{
-        
+
         res.view('user/register.jade', {
           errors: req.flash('error'),
           likes,
@@ -105,17 +105,17 @@ AuthController = {
         default:
           var reference;
           try {
-            reference = url.parse(req.headers.referer);  
+            reference = url.parse(req.headers.referer);
           } catch (e) {
             reference = { path : "" };
           }
-
+          sails.log.info("fail!!");
           if (req.xhr)
             return res.ok({
               status: "fail",
               message: "login fail"
             });
-          
+
           if (reference.path === '/admin/login') {
             res.redirect('/admin/login');
           }else {
@@ -141,6 +141,7 @@ AuthController = {
 
         console.log('=== user.Role ===', user);
 
+        sails.log.info("ok!!");
         if (req.xhr)
           return res.ok({
             status: "ok",
