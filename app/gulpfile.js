@@ -1,5 +1,5 @@
 (function(){
-    'use strict';    
+    'use strict';
     var gulp = require('gulp'),
         connect = require('gulp-connect'),
         open = require('gulp-open'),
@@ -161,7 +161,7 @@
             },
 
         };
-        
+
     function addJSIndent (file, t) {
         var addIndent = '        ';
         var filename = file.path.split('src/js/')[1];
@@ -205,7 +205,7 @@
             .on('end', function () {
                 cb();
             });
-        
+
     });
     gulp.task('styles-ios', function (cb) {
         var cbs = 0;
@@ -240,7 +240,7 @@
                     if (cbs === 3) cb();
                 });
         });
-            
+
     });
 
     // F7 Demo App
@@ -374,11 +374,11 @@
 
                 // Minify CSS
                 var minifiedCSS = [
-                    paths.dist.styles + f7.filename + '.ios.css', 
-                    paths.dist.styles + f7.filename + '.ios.rtl.css', 
+                    paths.dist.styles + f7.filename + '.ios.css',
+                    paths.dist.styles + f7.filename + '.ios.rtl.css',
                     paths.dist.styles + f7.filename + '.ios.colors.css',
-                    paths.dist.styles + f7.filename + '.material.css', 
-                    paths.dist.styles + f7.filename + '.material.rtl.css', 
+                    paths.dist.styles + f7.filename + '.material.css',
+                    paths.dist.styles + f7.filename + '.material.rtl.css',
                     paths.dist.styles + f7.filename + '.material.colors.css'
                 ];
                 gulp.src(minifiedCSS)
@@ -393,7 +393,7 @@
                     .pipe(gulp.dest(paths.dist.styles));
             });
     });
-    
+
     /* =================================
     Custom Build
     ================================= */
@@ -467,7 +467,7 @@
                 path.basename = path.basename + '.min';
             }))
             .pipe(gulp.dest(paths.custom.scripts));
-        
+
         // CSSes
         [customLessIOS, customLessMaterial].forEach(function (customLessList) {
             var theme = customLessList === customLessIOS ? 'ios' : 'material';
@@ -535,7 +535,7 @@
             port:'3000'
         });
     });
-    
+
     gulp.task('open', function () {
         return gulp.src('./index.html').pipe(open({ uri: 'http://localhost:3000/index.html'}));
     });
@@ -543,6 +543,6 @@
     gulp.task('server', [ 'watch', 'connect', 'open' ]);
 
     gulp.task('default', [ 'server' ]);
-    
+
     gulp.task('test', [ 'build' ]);
 })();

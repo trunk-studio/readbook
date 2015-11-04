@@ -10,7 +10,7 @@ For more information on the Sails logger, check out:
 http://sailsjs.org/#/documentation/concepts/Logging
 ###
 module.exports.log = {
-  level: 'warn'
+  level: 'info'
 }
 
 ###*
