@@ -51,18 +51,6 @@ module.exports = {
       let msg = error.message;
       return res.JSON({msg});
     }
-  },
-
-  showOneBook: async(req, res) => {
-    try {
-      let books = await db.Book.findAll();
-      sails.log.info("=== booksList ===",books);
-      return res.ok(books);
-    } catch (e) {
-      sails.log.error(e);
-      let msg = error.message;
-      return res.JSON({msg});
-    }
   }
 
 }
