@@ -124,7 +124,7 @@ block body
             img.width-6(src=book.cover[0])
           - var name = (book.name && book.name.length > 0) ? "(" + book.name + ")" : "";
           td 
-            a(target="_blank", href='/admin/ereader?id=#{book.id}&name=#{book.name}&pages=#{book.pages}&loc=#{book.location}&uuid=#{book.uuid}') 
+            a(target="_blank", href='/ereader?id=#{book.id}&name=#{book.name}&pages=#{book.pages}&loc=#{book.location}&uuid=#{book.uuid}') 
              | #{book.name} #{name}
           td #{book.author}
           td #{book.desc}
