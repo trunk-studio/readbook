@@ -71,6 +71,7 @@ module.exports.policies = {
   'PromotionController':
     create: []
 
+  'Bookcontroller': ['global']
   # #'/api/search/*': []
   # SearchController:
   #   products: []

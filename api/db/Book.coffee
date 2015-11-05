@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) ->
     name: DataTypes.STRING
     desc: DataTypes.STRING
     author: DataTypes.STRING
+    publishingHouse: DataTypes.STRING
 
     # media info
     location: DataTypes.STRING

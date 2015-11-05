@@ -59,6 +59,7 @@ module.exports = {
       name: 'APPLE',
       desc: 'a book about apple',
       author: 'Steve Jobs',
+      publishingHouse: 'nobody',
       pages: '100',
       location: '/a/1/a1tw-32sd-23dfs-3f24-sdff-fs3s',
       cover: 'a1tw-32sd-23dfs-3f24-sdff-fs3s.jpg',
@@ -70,6 +71,7 @@ module.exports = {
     let testBook2 = await db.Book.create({
       uuid: 'h34v-fs3s-23dfs-fs3s-23dfs-3f24',
       name: 'Google',
+      publishingHouse: 'nobody',
       desc: 'a book about google',
       author: 'eric schmidt',
       pages: '100',
