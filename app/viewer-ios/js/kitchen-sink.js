@@ -1,6 +1,7 @@
 var myApp = new Framework7({
     modalTitle: 'Framework7',
     animateNavBackIcon: true,
+    template7Pages: true
 });
 
 // Expose Internal DOM library
