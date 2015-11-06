@@ -72,6 +72,9 @@ module.exports.policies = {
     create: []
 
   'Bookcontroller': ['global']
+
+  
+  'EreaderController': ['global']
   # #'/api/search/*': []
   # SearchController:
   #   products: []
