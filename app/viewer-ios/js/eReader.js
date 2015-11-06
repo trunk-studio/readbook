@@ -21,7 +21,6 @@ $$(document).on('pageInit', '.page[data-page="book"]', function (e) {
           lazyLoadingOnTransitionStart: true
         });
         myPhotoBrowserStandalone.open();
-        
       }
     });
   });
