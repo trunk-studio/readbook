@@ -58,9 +58,11 @@ router.get('/user/loginStatus', function *(next){
 router.get('/ereader', function *(next){
   console.log(this);
   console.log("!!!!",this.request);
-  var result = yield request.get(restServerUrl+this.request.url);
+  var result = yield request.get(restServerUrl+this.request.url)
+  .set('x-requested-with', 'XMLHttpRequest');;
   console.log("result",result);
-  // this.body = result.body;
+  result.body.domain = restServerUrl;
+  this.body = result.body;
 });
 
 app

@@ -38,7 +38,7 @@ module.exports = {
       console.log('=== E-Reader: read : result ==>\n',result);
 
       // this is for multiple-output
-      if (query.responseType && query.responseType.toLowerCase() == 'json')
+      if (query.responseType && query.responseType.toLowerCase() == 'json' || req.xhr)
         return res.ok(result);
       else
         return res.view('ereader/ereader', result);
