@@ -57,11 +57,11 @@ block body
            .form-group
              label.col-md-4.control-label #{i18n('book-pages')}
              .col-md-3.p-right-0
-               input.form-control(type='number', name='pagesStart', value = query.pagesStart?query.pagesStart: '')
+               input.form-control(type='number', name='pagesStart', value = query.totalPagesStart?query.totalPagesStart: '')
              .col-md-2.p-left-0.p-right-0.text-center
                p.form-control-static #{i18n('to')}
              .col-md-3.p-left-0
-               input.form-control(type='number', name='pagesEnd', value = query.pagesEnd?query.pagesEnd: '')
+               input.form-control(type='number', name='pagesEnd', value = query.totalPagesEnd?query.totalPagesEnd: '')
            // /form-group
          // /col-md-4   
       // /row
@@ -124,7 +124,7 @@ block body
             img.width-6(src=book.cover[0])
           - var name = (book.name && book.name.length > 0) ? "(" + book.name + ")" : "";
           td 
-            a(target="_blank", href='/admin/ereader?id=#{book.id}&name=#{book.name}&pages=#{book.pages}&loc=#{book.location}&uuid=#{book.uuid}') 
+            a(target="_blank", href='/admin/ereader?id=#{book.id}&name=#{book.name}&pages=#{book.totalPages}&loc=#{book.location}&uuid=#{book.uuid}') 
              | #{book.name} #{name}
           td #{book.author}
           td #{book.desc}
@@ -139,7 +139,7 @@ block body
                 span.btn-text #{i18n('publish-true')}
 
             // /btn-group-switch
-          td #{book.pages}
+          td #{book.totalPages}
             //- .input-group.input-group-count.input-group-sm.max-width-100
             //-   span.input-group-btn
             //-     button.btn.btn-default.btn-number(type='button', disabled='disabled', data-type='minus', data-field='quant[1]')
@@ -152,7 +152,7 @@ block body
               // /input-group-btn
             // /input-group
           td.text-right
-            a.btn.btn-link(href='/admin/books/update?id=#{book.pages}')
+            a.btn.btn-link(href='/admin/books/update?id=#{book.totalPages}')
               span.glyphicon.glyphicon-pencil2
   hr.dashed-line
   +pagination-simple-pager(page, totalPages)

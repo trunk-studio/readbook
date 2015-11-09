@@ -1,55 +1,57 @@
-
 module.exports = function(sequelize, DataTypes) {
 
-  var Site = sequelize.define('Site', {
+    var Site = sequelize.define('Site', {
 
-    // 品牌大頭照
-    avatar: DataTypes.STRING,
+        // key
+        id: {
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true
+        },
 
-    // 品牌名稱
-    name: DataTypes.STRING,
+        // 原先舊資料的ID
+        tenantId: DataTypes.INTEGER,
 
-    // 代理商品 or 精選商品
-    type: DataTypes.ENUM('AGENT', 'PRIME_GOOD', 'OTHER'),
+        // 所提供服務之類型
+        serviceKind: DataTypes.STRING,
 
-    // 品牌介紹
-    desc: DataTypes.TEXT,
+        // 該site名稱
+        name: DataTypes.STRING,
 
-    // 購物招牌
-    banner: DataTypes.STRING,
+        // merchantId
+        merchantId: DataTypes.INTEGER,
 
-    // 形象照片
-    photos: {
-      type: DataTypes.TEXT,
-      get: function() {
+        // 網域名
+        domainName: DataTypes.STRING,
 
-        var value = this.getDataValue('photos');
+        // 內部域名
+        privateDomainName: DataTypes.STRING,
 
-        if(value) {
-          return JSON.parse(value);
+        //
+        isAbloition: DataTypes.BOOLEAN,
+
+        // 最後更新的user記錄
+        lastUpdatedUserId: DataTypes.STRING,
+
+        // 註解
+        remark: DataTypes.STRING
+
+    }, {
+        //
+        paranoid: true,
+        //
+        classMethods: {
+            associate: function(models) {
+                //
+                Site.hasMany(models.User);
+                Site.hasMany(models.Group);
+                Site.hasMany(models.News);
+                Site.belongsToMany(models.Book, {
+                    through: 'SiteBook'
+                });
+                return
+            }
         }
-
-        return [];
-      },
-      set: function(value) {
-        return this.setDataValue('photos', JSON.stringify(value));
-      }
-    },
-
-    // 順序權重
-    weight: {
-      type: DataTypes.INTEGER,
-    }
-  },
-  {
-    paranoid: true,
-    classMethods: {
-      associate: function(models) {
-        Site.belongsToMany(models.Host, {
-          through: 'HostSite'
-        });
-      }
-    }
-  });
-  return Site;
+    });
+    return Site;
 };
