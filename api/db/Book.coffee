@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) ->
     Book = sequelize.define('Book', {
 
         #  basic info
-        uuid: {
+        id: {
             type:DataTypes.UUID
             defaultValue:DataTypes.UUIDV4
         }
