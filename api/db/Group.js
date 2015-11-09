@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     var Group = sequelize.define('Group', {
 
         // key
-        uuid: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true

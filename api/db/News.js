@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     var News = sequelize.define('News', {
 
         // key
-        uuid: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true

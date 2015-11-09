@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
     var IpGuard = sequelize.define('IpGuard', {
 
         // key
-        uuid: {
+        id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             primaryKey: true
