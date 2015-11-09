@@ -42,7 +42,7 @@ module.exports = {
 
                 // create books
                 let testBook1 = await db.Book.create({
-                    id: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
+                    // id: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
                     name: '七兄弟(靜態繪本)(試讀本)',
                     cpEbookName: '七兄弟',
                     location: '/a/1/a1tw-32sd-23dfs-3f24-sdff-fs3s',
@@ -66,7 +66,7 @@ module.exports = {
                 await testBook1.setSites([testSiteA, testSiteC]);
 
                 let testBook2 = await db.Book.create({
-                    id: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
+                    // id: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
                     name: '七龍珠(靜態繪本)(試讀本)',
                     cpEbookName: '七龍珠',
                     location: '/a/1/a1tw-32sd-23dfs-3f24-sdff-fs3s',
