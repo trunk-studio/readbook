@@ -50,15 +50,13 @@ guest.post('/auth/local/', function *(next) {
   } catch (e) {
     console.log(e);
   }
-  // console.log("result",result);
 });
 
 guest.get('/user/loginStatus', function *(next){
   console.log(this);
   try {
-    var result = yield request.get(restServerUrl+'/user/loginStatus');
-    console.log("result",result);
-    this.body = result.body;
+    var status = this.session.login || false;
+    this.body = status;
   } catch (e) {
     console.log(e);
   }
