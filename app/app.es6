@@ -7,13 +7,17 @@ var mount = require('koa-mount');
 var path = require('path');
 var staticCache = require('koa-static-cache');
 var serve = require('koa-static');
-
+var session = require('koa-generic-session');
+var passport = require('koa-passport')
 var app = module.exports = koa();
 
 app.use(koaBodyParser());
+app.keys = ['your-session-secret'];
+app.use(session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 var env = process.env.NODE_ENV || 'development';
-
 var addr = process.env.PICKLETE_PORT_1337_TCP_ADDR || 'localhost';
 var port = process.env.PICKLETE_PORT_1337_TCP_PORT || '1337';
 
@@ -29,18 +33,55 @@ router.get('/', function *(next) {
 router.post('/auth/local/', function *(next) {
   var loginForm = this.request.body;
   console.log("/auth/local/",loginForm);
-  var result = yield request.post(restServerUrl+'/auth/local/')
-  .send(loginForm)
-  .set('Content-Type', 'application/json')
-  .set('x-requested-with', 'XMLHttpRequest');
+  try {
+    var result = yield request.post(restServerUrl+'/auth/local/')
+    .send(loginForm)
+    .set('Content-Type', 'application/json')
+    .set('x-requested-with', 'XMLHttpRequest');
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
   // console.log("result",result);
-  this.body = result.body;
+});
 
+router.post('/books', function *(next) {
+  try {
+    var result = yield request.post(restServerUrl+'/books')
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get('/user/loginStatus', function *(next){
+  console.log(this);
+  try {
+    var result = yield request.get(restServerUrl+'/user/loginStatus');
+    console.log("result",result);
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+router.get('/ereader', function *(next){
+  console.log(this);
+  try {
+    var result = yield request.get(restServerUrl+this.request.url)
+    .set('x-requested-with', 'XMLHttpRequest');;
+    console.log("result",result);
+    result.body.domain = restServerUrl;
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app
   .use(router.routes())
   .use(router.allowedMethods());
+
 
 console.log('=== env ===', env);
 if(env === 'development')

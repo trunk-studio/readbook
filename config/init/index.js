@@ -375,15 +375,24 @@ module.exports = {
             //let isolationLevel = db.Sequelize.Transaction.ISOLATION_LEVELS.SERIALIZABLE;
             //let transaction = await db.sequelize.transaction({isolationLevel});
 
-            let newBuyer = await db.User.create({
-                username: "buyer",
-                email: "smlsun@gmail.com",
-                password: "buyer",
-                RoleId: createRoleUser.id,
-                comment: "this is a newBuyer",
-                orderSyncToken: '11111',
-                mobile: '0937397377'
-            });
+            var newBuyer = {
+              username: "buyer",
+              email: "buyer@gmail.com",
+              password: "buyer",
+              RoleId: createRoleUser.id,
+              comment: "this is a newBuyer",
+              orderSyncToken:'11111',
+              mobile: '0937397377',
+              verification: true
+            };
+            var createNewBuyer = await db.User.create(newBuyer);
+
+            let passport = {
+              protocol: 'local',
+              password: "buyer",
+              UserId: createNewBuyer.id
+            };
+            await db.Passport.create(passport);
 
             let newBuyer2 = await db.User.create({
                 username: "buyer2",

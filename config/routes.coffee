@@ -80,9 +80,9 @@ module.exports.routes = {
 
   # books
   'get /admin/books' : 'BookController.list'
-
+  'post /books': 'BookController.getBookList'
   # book-reader
-  'get /admin/ereader' : 'EreaderController.read'
+  'get /ereader' : 'EreaderController.read'
 
   # goods
   'get /admin/goods' : 'ProductController.list'

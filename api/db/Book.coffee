@@ -72,7 +72,7 @@ module.exports = (sequelize, DataTypes) ->
             type: DataTypes.INTEGER
         }
         cooperativeInnerId:{
-            type: DataTypes.INTEGER
+            type: DataTypes.STRING
         }
         fullContentBookId:{
             type: DataTypes.STRING

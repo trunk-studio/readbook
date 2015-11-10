@@ -76,7 +76,7 @@ module.exports = {
                     viewCount: 0,
                     serialName: '日本漫畫',
                     merchantId: 50,
-                    cooperativeInnerId: 'Q7001',
+                    cooperativeInnerId: 'Q7002',
                     doneDate: '2009-11-02 13:47:54.047',
                     articleAuthor: '烏山名',
                     pictureAuthor: '烏山名',

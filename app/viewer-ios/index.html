@@ -314,5 +314,27 @@
     <script type="text/javascript" src="../build/js/framework7.js"></script>
     <script type="text/javascript" src="js/kitchen-sink.js"></script>
     <script type="text/javascript" src="js/login.js"></script>
+    <script type="text/javascript" src="js/bookList.js"></script>
+    <script type="text/javascript" src="js/eReader.js"></script>
+    <!-- template7 templates -->
+    <script type="text/template7" id="booklist">
+      {{#each this}}
+        <li class="item-content">
+          <div class="item-media"><img src="http://auo.koobe.com.tw/Public/Thumbnail.aspx?ea26fd19-0d44-4380-a10e-2e34ea755aeb&width=800" width="44"/></div>
+          <div class="item-inner">
+            <div class="item-title-row">
+              <div class="item-title">
+                <a href="book-demo.html" data-context-name = "bookInfo.{{@index}}">
+                  {{name}}
+                </a>
+              </div>
+            </div>
+            <div class="item-subtitle">作者：{{articleAuthor}}</div>
+            <div class="item-subtitle">出版社：{{publisher}}</div>
+          </div>
+        </li>
+      {{/each}}
+    </script>
+
   </body>
 </html>
