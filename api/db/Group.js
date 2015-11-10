@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 //
                 Group.belongsTo(models.Site);
-                Group.hasMany(models.User);
+                Group.belongsToMany(models.User, {through: 'SiteUser'})
 
                 return
             }

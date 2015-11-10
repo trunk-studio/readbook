@@ -3,6 +3,10 @@ module.exports = (sequelize, DataTypes) ->
     User = sequelize.define('User', {
 
         #
+        id:
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4
+            primaryKey: true
         userGuid:
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4
@@ -26,7 +30,9 @@ module.exports = (sequelize, DataTypes) ->
 
         # picklete user data layout
         # needed to be update someday.
-        username: DataTypes.STRING
+        username: {
+          type: DataTypes.STRING,
+        }
         fullName: DataTypes.STRING
         gender: DataTypes.ENUM('none', 'male', 'female')
         email: DataTypes.STRING
@@ -56,15 +62,22 @@ module.exports = (sequelize, DataTypes) ->
         privacyTermsAgree:
             type: DataTypes.BOOLEAN
             defaultValue: false
-    }, classMethods: associate: (models) ->
+    }, {
+      indexes: [
+        {
+          unique: true,
+          fields: ['username', 'SiteId']
+        },
+      ],
+      classMethods: associate: (models) ->
         User.belongsTo models.Role
         User.belongsToMany(models.Like, {through: 'UserLike'});
         User.belongsToMany(models.Product, {through: 'UserFavorite'})
         User.belongsToMany(models.ShopCode, {through: 'userShopCode'})
 
         User.belongsTo(models.Site)
-        User.belongsTo(models.Group)
+        User.belongsToMany(models.Group, {through: 'GroupUser'})
 
         return
-    )
+    })
     return User
