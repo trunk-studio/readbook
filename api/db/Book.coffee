@@ -3,10 +3,9 @@ module.exports = (sequelize, DataTypes) ->
     Book = sequelize.define('Book', {
 
         #  basic info
-        id: {
+        eBookGuid: {
             type:DataTypes.UUID
             defaultValue:DataTypes.UUIDV4
-            primaryKey: true
         }
         name: DataTypes.STRING
         cpEbookName: DataTypes.STRING
@@ -133,7 +132,7 @@ module.exports = (sequelize, DataTypes) ->
             type: DataTypes.STRING
         }
         longDescription:{
-            type: DataTypes.STRING
+            type: DataTypes.TEXT
         }
         supplierId:{
             type: DataTypes.INTEGER
