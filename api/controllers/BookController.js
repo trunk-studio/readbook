@@ -48,8 +48,8 @@ module.exports = {
       return res.ok(books);
     } catch (e) {
       sails.log.error(e);
-      let msg = error.message;
-      return res.JSON({msg});
+      let msg = e.message;
+      return res.serverError(e, {type: 'json'});
     }
   }
 

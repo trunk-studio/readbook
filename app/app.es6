@@ -33,36 +33,49 @@ router.get('/', function *(next) {
 router.post('/auth/local/', function *(next) {
   var loginForm = this.request.body;
   console.log("/auth/local/",loginForm);
-  // console.log("!!!!",this.session);
-  var result = yield request.post(restServerUrl+'/auth/local/')
-  .send(loginForm)
-  .set('Content-Type', 'application/json')
-  .set('x-requested-with', 'XMLHttpRequest');
+  try {
+    var result = yield request.post(restServerUrl+'/auth/local/')
+    .send(loginForm)
+    .set('Content-Type', 'application/json')
+    .set('x-requested-with', 'XMLHttpRequest');
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
   // console.log("result",result);
-  this.body = result.body;
 });
 
 router.post('/books', function *(next) {
-  var result = yield request.post(restServerUrl+'/books')
-  this.body =  result.body;
+  try {
+    var result = yield request.post(restServerUrl+'/books')
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get('/user/loginStatus', function *(next){
   console.log(this);
-  // console.log("!!!!",this.session);
-  var result = yield request.get(restServerUrl+'/user/loginStatus');
-  console.log("result",result);
-  this.body = result.body;
+  try {
+    var result = yield request.get(restServerUrl+'/user/loginStatus');
+    console.log("result",result);
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 router.get('/ereader', function *(next){
   console.log(this);
-  console.log("!!!!",this.request);
-  var result = yield request.get(restServerUrl+this.request.url)
-  .set('x-requested-with', 'XMLHttpRequest');;
-  console.log("result",result);
-  result.body.domain = restServerUrl;
-  this.body = result.body;
+  try {
+    var result = yield request.get(restServerUrl+this.request.url)
+    .set('x-requested-with', 'XMLHttpRequest');;
+    console.log("result",result);
+    result.body.domain = restServerUrl;
+    this.body = result.body;
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app

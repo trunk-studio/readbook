@@ -27,6 +27,9 @@ module.exports = serverError = (data, options) ->
   else
     sails.log.error "Sending empty 500 (\"Server Error\") response"
 
+  if options.type is 'json'
+    return res.jsonx data
+
   return UtilService.errorHandle(req, res);
 
   # Only include errors in response if application environment
@@ -44,6 +47,7 @@ module.exports = serverError = (data, options) ->
   # If a view was provided in options, serve it.
   # Otherwise try to guess an appropriate view, or if that doesn't
   # work, just send JSON.
+
   if options.view
     res.view options.view,
       data: data
