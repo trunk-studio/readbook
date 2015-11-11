@@ -22,9 +22,11 @@ Run picklete
 $ npm start
 ```
 buyer@gmail.com / buyer
+
 http://e7read.koobe.com.tw:3000/viewer-ios/
 
 buyerB@gmail.com / buyerB
+
 http://read.koobe.com.tw:3000/viewer-ios/
 
 
