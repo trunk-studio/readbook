@@ -101,12 +101,21 @@ exports.connect = function(req, res, next) {
 
 
 exports.login = function(req, identifier, password, next) {
-  console.log('=== doLogin ===');
+  console.log('=== doLogin ===',req.body);
   var isEmail, query;
   isEmail = validator.isEmail(identifier);
   query = {
     where: {},
-    include: [db.Role, db.Like]
+    include: [{
+      model: db.Role
+    },{
+      model: db.Like
+    },{
+      model: db.Site,
+      where:{
+        domainName: req.body.domain
+      }
+    }]
   };
   if (isEmail) {
     query.where.email = identifier;

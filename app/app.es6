@@ -1,21 +1,24 @@
 var koa = require('koa');
-var router = require('koa-router')();
-// var request = require("co-request");
 var request = require('superagent');
-var koaBodyParser = require('koa-bodyparser');
 var mount = require('koa-mount');
 var path = require('path');
 var staticCache = require('koa-static-cache');
 var serve = require('koa-static');
-var session = require('koa-generic-session');
-var passport = require('koa-passport')
 var app = module.exports = koa();
 
-app.use(koaBodyParser());
+
+var session = require('koa-generic-session');
 app.keys = ['your-session-secret'];
 app.use(session());
-app.use(passport.initialize());
-app.use(passport.session());
+
+var koaBodyParser = require('koa-bodyparser');
+app.use(koaBodyParser());
+
+
+// require('./auth.js')
+// var passport = require('koa-passport')
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 var env = process.env.NODE_ENV || 'development';
 var addr = process.env.PICKLETE_PORT_1337_TCP_ADDR || 'localhost';
@@ -24,14 +27,17 @@ var port = process.env.PICKLETE_PORT_1337_TCP_PORT || '1337';
 //todo: use PICKLETE_ENDPOINT_URL=http://localhost:1337/
 
 var restServerUrl = 'http://' + addr + ':' + port;
-let a = 0;
-router.get('/', function *(next) {
-  this.redirect('/index.html');
-});
 
+var Router = require('koa-router');
+/* public routes */
 
-router.post('/auth/local/', function *(next) {
+var guest = new Router();
+
+app.use(guest.middleware());
+
+guest.post('/auth/local/', function *(next) {
   var loginForm = this.request.body;
+  loginForm.domain = this.request.header.host;
   console.log("/auth/local/",loginForm);
   try {
     var result = yield request.post(restServerUrl+'/auth/local/')
@@ -39,37 +45,55 @@ router.post('/auth/local/', function *(next) {
     .set('Content-Type', 'application/json')
     .set('x-requested-with', 'XMLHttpRequest');
     this.body = result.body;
-  } catch (e) {
-    console.log(e);
-  }
-  // console.log("result",result);
-});
-
-router.post('/books', function *(next) {
-  try {
-    var result = yield request.post(restServerUrl+'/books')
-    this.body = result.body;
+    console.log(result.body);
+    if(result.body.status == 'ok'){
+      this.session.login = true;
+      this.session.user = result.body.user;
+      console.log(this.session);
+    }
   } catch (e) {
     console.log(e);
   }
 });
 
-router.get('/user/loginStatus', function *(next){
+guest.get('/user/loginStatus', function *(next){
   console.log(this);
   try {
-    var result = yield request.get(restServerUrl+'/user/loginStatus');
-    console.log("result",result);
+    var status = this.session.login || false;
+    this.body = status;
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+/* public routes */
+
+
+var secured = new Router();
+
+app.use(function*(next) {
+  if (this.session.login || this.request.url.startsWith("/build") || this.request.url.startsWith("/viewer-ios")) {
+    yield next
+  } else {
+    this.redirect('/viewer-ios/index.html');
+  }
+})
+app.use(secured.middleware());
+
+secured.post('/books', function *(next) {
+  try {
+    var result = yield request.post(restServerUrl+'/books').send(this.session.user)
     this.body = result.body;
   } catch (e) {
     console.log(e);
   }
 });
 
-router.get('/ereader', function *(next){
+secured.get('/ereader', function *(next){
   console.log(this);
   try {
     var result = yield request.get(restServerUrl+this.request.url)
-    .set('x-requested-with', 'XMLHttpRequest');;
+    .set('x-requested-with', 'XMLHttpRequest');
     console.log("result",result);
     result.body.domain = restServerUrl;
     this.body = result.body;
@@ -78,9 +102,9 @@ router.get('/ereader', function *(next){
   }
 });
 
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
+// app
+//   .use(router.routes())
+//   .use(router.allowedMethods());
 
 
 console.log('=== env ===', env);

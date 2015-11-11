@@ -43,7 +43,15 @@ module.exports = {
 
   getBookList: async(req, res) =>{
     try {
-      let books = await db.Book.findAll();
+      let date = req.body;
+      let books = await db.Book.findAll({
+        include:{
+          model: db.Site,
+          where:{
+            id: date.Site.id
+          }
+        }
+      });
       sails.log.info("=== booksList ===",books);
       return res.ok(books);
     } catch (e) {
