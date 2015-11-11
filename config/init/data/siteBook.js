@@ -21,7 +21,7 @@ module.exports = {
                     serviceKind: 'B2B',
                     name: '台灣知識庫電子書',
                     merchantId: '11',
-                    domainName: 'b.17readbook.com',
+                    domainName: 'read.koobe.com.tw:3000',
                     privateDomainName: 'b_private.17readbook.com',
                     isAbloition: false,
                     lastUpdatedUserId: 1,
@@ -32,7 +32,7 @@ module.exports = {
                     serviceKind: 'B2B',
                     name: '遠流員工電子書',
                     merchantId: '11',
-                    domainName: 'e7read.koobe.com.tw:3000',
+                    domainName: 'c.koobe.com.tw:3000',
                     privateDomainName: 'c_private.17readbook.com',
                     isAbloition: false,
                     lastUpdatedUserId: 1,
@@ -43,7 +43,7 @@ module.exports = {
                 // create books
                 let testBook1 = await db.Book.create({
                     // id: 'a1tw-32sd-23dfs-3f24-sdff-fs3s',
-                    name: '七兄弟(靜態繪本)(試讀本)',
+                    name: '兄弟(靜態繪本)(試讀本)',
                     cpEbookName: '七兄弟',
                     location: '/a/1/a1tw-32sd-23dfs-3f24-sdff-fs3s',
                     cover: 'a1tw-32sd-23dfs-3f24-sdff-fs3s.jpg',
@@ -122,6 +122,26 @@ module.exports = {
                   UserId: createNewBuyer.id
                 };
                 await db.Passport.create(passport);
+
+                var newBuyerB = {
+                  username: "buyerB",
+                  email: "buyerB@gmail.com",
+                  password: "buyerB",
+                  RoleId: createRoleUser.id,
+                  comment: "this is a newBuyer",
+                  orderSyncToken:'11111',
+                  mobile: '0937397377',
+                  verification: true,
+                  SiteId: testSiteB.id
+                };
+                var createNewBuyerB = await db.User.create(newBuyerB);
+
+                let passportB = {
+                  protocol: 'local',
+                  password: "buyerB",
+                  UserId: createNewBuyerB.id
+                };
+                await db.Passport.create(passportB);
 
             } catch (e) {
                 console.log('error=>', e.stack);
