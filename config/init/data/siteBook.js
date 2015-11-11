@@ -32,7 +32,7 @@ module.exports = {
                     serviceKind: 'B2B',
                     name: '遠流員工電子書',
                     merchantId: '11',
-                    domainName: 'c.17readbook.com',
+                    domainName: 'e7read.koobe.com.tw:3000',
                     privateDomainName: 'c_private.17readbook.com',
                     isAbloition: false,
                     lastUpdatedUserId: 1,
@@ -89,6 +89,39 @@ module.exports = {
                     ISBN: '9789789781978'
                 });
                 await testBook2.setSites([testSiteB.id, testSiteC.id]);
+
+                var roleUser = {
+                    authority: 'user',
+                    comment: 'site user'
+                };
+
+                let roleUserOptions = {
+                    where: {
+                        authority: 'user'
+                    },
+                    defaults: roleUser
+                }
+                var createRoleUser = (await db.Role.findOrCreate(roleUserOptions))[0];
+
+                var newBuyer = {
+                  username: "buyer",
+                  email: "buyer@gmail.com",
+                  password: "buyer",
+                  RoleId: createRoleUser.id,
+                  comment: "this is a newBuyer",
+                  orderSyncToken:'11111',
+                  mobile: '0937397377',
+                  verification: true,
+                  SiteId: testSiteC.id
+                };
+                var createNewBuyer = await db.User.create(newBuyer);
+
+                let passport = {
+                  protocol: 'local',
+                  password: "buyer",
+                  UserId: createNewBuyer.id
+                };
+                await db.Passport.create(passport);
 
             } catch (e) {
                 console.log('error=>', e.stack);

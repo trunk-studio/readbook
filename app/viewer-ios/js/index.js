@@ -1,3 +1,16 @@
+
+var myApp = new Framework7({
+    modalTitle: 'Framework7',
+    animateNavBackIcon: true,
+    template7Pages: true,
+    pushState: true,
+    swipeBackPage: false,
+    init: false
+});
+
+// Expose Internal DOM library
+var $$ = Dom7;
+
 $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
   $$.ajax({
     url: "/user/loginStatus",
@@ -15,3 +28,5 @@ $$(document).on('pageInit', '.page[data-page="index"]', function (e) {
     }
   });
 })
+
+myApp.init();

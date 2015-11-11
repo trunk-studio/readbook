@@ -33,20 +33,24 @@ var Router = require('koa-router');
 
 var guest = new Router();
 
-
 app.use(guest.middleware());
 
 guest.post('/auth/local/', function *(next) {
   var loginForm = this.request.body;
+  loginForm.domain = this.request.header.host;
   console.log("/auth/local/",loginForm);
   try {
-    this.session.login = true;
-    console.log(this.session);
     var result = yield request.post(restServerUrl+'/auth/local/')
     .send(loginForm)
     .set('Content-Type', 'application/json')
     .set('x-requested-with', 'XMLHttpRequest');
     this.body = result.body;
+    console.log(result.body);
+    if(result.body.status == 'ok'){
+      this.session.login = true;
+      this.session.user = result.body.user;
+      console.log(this.session);
+    }
   } catch (e) {
     console.log(e);
   }

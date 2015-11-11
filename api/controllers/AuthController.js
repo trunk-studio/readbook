@@ -145,7 +145,8 @@ AuthController = {
         if (req.xhr)
           return res.ok({
             status: "ok",
-            message: "login success"
+            message: "login success",
+            user
           });
 
         return res.redirect('/');
