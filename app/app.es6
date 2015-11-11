@@ -72,6 +72,7 @@ guest.get('/user/loginStatus', function *(next){
 var secured = new Router();
 
 app.use(function*(next) {
+  console.log(this.request.url);
   if (this.session.login || this.request.url.startsWith("/build") || this.request.url.startsWith("/viewer-ios")) {
     yield next
   } else {
@@ -82,7 +83,7 @@ app.use(secured.middleware());
 
 secured.post('/books', function *(next) {
   try {
-    var result = yield request.post(restServerUrl+'/books')
+    var result = yield request.post(restServerUrl+'/books').send(this.session.user)
     this.body = result.body;
   } catch (e) {
     console.log(e);

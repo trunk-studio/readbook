@@ -10,7 +10,7 @@ module.exports = {
                     serviceKind: 'PR',
                     name: '科學人電子雜誌公關專屬網',
                     merchantId: '9',
-                    domainName: 'a.17readbook.com',
+                    domainName: 'e7read.koobe.com.tw:3000',
                     privateDomainName: 'a_private.17readbook.com',
                     isAbloition: false,
                     lastUpdatedUserId: 1,
@@ -112,7 +112,7 @@ module.exports = {
                   orderSyncToken:'11111',
                   mobile: '0937397377',
                   verification: true,
-                  SiteId: testSiteC.id
+                  SiteId: testSiteA.id
                 };
                 var createNewBuyer = await db.User.create(newBuyer);
 
