@@ -72,7 +72,6 @@ guest.get('/user/loginStatus', function *(next){
 var secured = new Router();
 
 app.use(function*(next) {
-  console.log(this.request.url);
   if (this.session.login || this.request.url.startsWith("/build") || this.request.url.startsWith("/viewer-ios")) {
     yield next
   } else {
