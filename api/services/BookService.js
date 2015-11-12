@@ -183,17 +183,5 @@ module.exports = {
     }
   },
 
-  uploadBookCover : async (bookId,coverUrl) => {
-    try {
-      let result = await db.ShopCode.findOne({
-        where:{
-          code: code
-        }
-      });
-      return result;
-    } catch (e) {
-      throw e;
-    }
-  },
   // end
 };
