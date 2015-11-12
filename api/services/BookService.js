@@ -181,6 +181,19 @@ module.exports = {
     } catch (e) {
       return console.error(e.stack)
     }
-  }
+  },
+
+  uploadBookCover : async (bookId,coverUrl) => {
+    try {
+      let result = await db.ShopCode.findOne({
+        where:{
+          code: code
+        }
+      });
+      return result;
+    } catch (e) {
+      throw e;
+    }
+  },
   // end
 };

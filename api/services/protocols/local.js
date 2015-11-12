@@ -101,7 +101,7 @@ exports.connect = function(req, res, next) {
 
 
 exports.login = function(req, identifier, password, next) {
-  console.log('=== doLogin ===',req.body);
+  console.log('=== doLogin ===');
   var isEmail, query;
   isEmail = validator.isEmail(identifier);
   query = {

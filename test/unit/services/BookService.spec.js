@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-describe("about BookService =>", () => {
+describe.only("about BookService =>", () => {
 
   let testHost, testSite, testBook, testBook2;
 
@@ -256,6 +256,18 @@ describe("about BookService =>", () => {
       deleteBook.deletedAt.should.be.date;
       done();
     } catch (e) {
+      done(e);
+    }
+  });
+
+  it('upload Book Cover', async (done) => {
+    try {
+      let check = await ShopCodeService.use(data);
+      check.price.should.be.equal(800);
+      check.discountAmount.should.be.equal(200);
+      done();
+    } catch (e) {
+      console.log(e);
       done(e);
     }
   });

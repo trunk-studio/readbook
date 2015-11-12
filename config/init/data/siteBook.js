@@ -143,6 +143,54 @@ module.exports = {
                 };
                 await db.Passport.create(passportB);
 
+
+                var roleAdmin = {
+                    authority: 'admin',
+                    comment: 'site admin'
+                };
+                let roleAdminOptions = {
+                    where: {
+                        authority: 'admin'
+                    },
+                    defaults: roleAdmin
+                }
+                var createRoleAdmin = (await db.Role.findOrCreate(roleAdminOptions))[0];
+
+                let admin = {
+                    username: "admin",
+                    email: "admin@gmail.com",
+                    mobile: "0900000000",
+                    address: "admin",
+                    comment: "",
+                    city: "基隆市",
+                    region: "仁愛區",
+                    zipcode: 200,
+                    RoleId: createRoleAdmin.id,
+                    SiteId: testSiteB.id
+                };
+                let userOptions = {
+                    where: {
+                        username: "admin"
+                    },
+                    defaults: admin
+                }
+                let createdAdmin = (await db.User.findOrCreate(userOptions))[0];
+
+                passport = {
+                    protocol: 'local',
+                    password: "admin",
+                    UserId: createdAdmin.id
+                };
+
+                let passportOptions = {
+                    where: {
+                        UserId: createdAdmin.id
+                    },
+                    defaults: passport
+                }
+
+                await db.Passport.findOrCreate(passportOptions);
+
             } catch (e) {
                 console.log('error=>', e.stack);
             }
