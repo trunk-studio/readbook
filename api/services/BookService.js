@@ -181,6 +181,7 @@ module.exports = {
     } catch (e) {
       return console.error(e.stack)
     }
-  }
+  },
+
   // end
 };

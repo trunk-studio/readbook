@@ -8,12 +8,13 @@ module.exports = {
       // book inforations
       let bookName = query.name;
       let pageTotal = query.pages;
-      let fileLocation = query.loc;
+      // let fileLocation = query.loc;
       let fileName = query.uuid;
 
       // make a fake book
-      fileLocation = '/images/ereader/book-sample';
-      fileName = 'sample';
+
+      let fileLocation = '/images/ereader';
+      let layer = query.id.charAt(0)+'/'+query.id.charAt(1)+'/'+query.id.charAt(2);
 
       // merge-file-name-location-to-book-array
       var pages = [];
@@ -25,7 +26,7 @@ module.exports = {
         return str;
       }
       for (var i = 1; i <= pageTotal; i++) {
-        pages.push({index: i-1, url: fileLocation+'/'+fileName+'-'+pad(i, 3)+'.jpg'});
+        pages.push({index: i-1, url: fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg'});
       }
 
       // marge output
@@ -43,7 +44,7 @@ module.exports = {
       else
         return res.view('ereader/ereader', result);
     } catch (error) {
-      console.error(error.stack);
+      console.error(error);
       let msg = error.message;
       return res.serverError({msg});
     }

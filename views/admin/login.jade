@@ -25,6 +25,7 @@ block body
                 | &#x9;&#x9;&#x9;&#x9;&#x9;&#x9;
                 .col-md-10
                   input.form-control(type='password', placeholder='Password', name='password')
+                  input#domain.form-control(type='hidden' name='domain')
               // /form-group
               .row.m-top-6
                 .col-sm-6.col-sm-offset-3
@@ -35,3 +36,6 @@ block body
         // /col-sm-6
       // /row
     // /container
+    block js
+      script.
+        document.getElementById("domain").value = window.location.hostname
