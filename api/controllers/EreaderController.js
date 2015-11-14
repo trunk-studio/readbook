@@ -26,7 +26,8 @@ module.exports = {
         return str;
       }
       for (var i = 1; i <= pageTotal; i++) {
-        pages.push({index: i-1, url: fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg'});
+        let url = fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg';
+        pages.push({index: i-1, url: url.toLowerCase()});
       }
 
       // marge output
