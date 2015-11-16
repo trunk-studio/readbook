@@ -24,6 +24,7 @@ module.exports.policies = {
     controlLogin: ['global']
     cart: []
     loginStatus:['global']
+    update: ['global']
 
   'MainController': ['global']
 
@@ -73,7 +74,7 @@ module.exports.policies = {
 
   'Bookcontroller': ['global']
 
-  
+
   'EreaderController': ['global']
   # #'/api/search/*': []
   # SearchController:
