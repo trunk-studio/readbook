@@ -46,6 +46,7 @@ module.exports = function(sequelize, DataTypes) {
                 Site.hasMany(models.User);
                 Site.hasMany(models.Group);
                 Site.hasMany(models.News);
+                Site.hasMany(models.Host);
                 Site.belongsToMany(models.Book, {
                     through: 'SiteBook'
                 });
