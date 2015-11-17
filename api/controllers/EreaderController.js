@@ -25,7 +25,8 @@ module.exports = {
         }
         return str;
       }
-      for (var i = 1; i <= pageTotal; i++) {
+      
+      for (var i = 0; i <= pageTotal-1; i++) {
         let url = fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg';
         pages.push({index: i-1, url: url.toLowerCase()});
       }

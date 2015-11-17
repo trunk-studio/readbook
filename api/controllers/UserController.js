@@ -99,12 +99,23 @@ let UserController = {
     });
   },
   update: async (req, res) => {
-
     try {
+
       let loginUser = UserService.getLoginUser(req);
       let updateUser = req.body;
-      let passport = await db.Passport.find({where: {UserId: loginUser.id}});
+      if(!loginUser){
+        loginUser = req.body.user;
+      }
 
+      if(updateUser.password != updateUser.checkPassword)
+        throw new Error ('密碼錯誤');
+
+      let passport = await db.Passport.find({where: {UserId: loginUser.id}});
+      if(updateUser.hasOwnProperty('oldPassword')){
+        if(updateUser.oldPassword != passport.password){
+          throw new Error ('密碼錯誤');
+        }
+      }
       let user = await db.User.findById(loginUser.id);
 
       if(updateUser.password != passport.password){
@@ -123,16 +134,18 @@ let UserController = {
       if(updateUser.userLikes != undefined)
         await user.setLikes(updateUser.userLikes);
 
-
+      if (req.xhr)
+        return res.ok({
+          status: "ok",
+          message: "update success"
+        });
 
       return res.redirect('/member/setting');
 
 
     } catch (e) {
       console.error(e.stack);
-      let {message} = e;
-      res.serverError({message});
-
+      res.serverError(e, {type: 'json'});
     }
 
 
