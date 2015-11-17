@@ -145,7 +145,6 @@ let UserController = {
 
     } catch (e) {
       console.error(e.stack);
-      let {message} = e;
       res.serverError(e, {type: 'json'});
     }
 
