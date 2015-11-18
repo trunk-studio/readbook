@@ -100,8 +100,15 @@ exports.connect = function(req, res, next) {
 };
 
 
-exports.login = function(req, identifier, password, next) {
+exports.login = async function(req, identifier, password, next) {
   console.log('=== doLogin ===');
+
+  var host = await db.Host.findOne({
+    where:{
+      host: req.body.domain
+    }
+  })
+  
   var isEmail, query;
   isEmail = validator.isEmail(identifier);
   query = {
@@ -113,7 +120,7 @@ exports.login = function(req, identifier, password, next) {
     },{
       model: db.Site,
       where:{
-        domainName: req.body.domain
+        id: host.SiteId
       }
     }]
   };
