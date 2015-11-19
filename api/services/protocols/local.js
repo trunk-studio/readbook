@@ -108,7 +108,10 @@ exports.login = async function(req, identifier, password, next) {
       host: req.body.domain
     }
   })
-  
+
+  if(!host)
+    return next(null, false);
+
   var isEmail, query;
   isEmail = validator.isEmail(identifier);
   query = {
