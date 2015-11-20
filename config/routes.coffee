@@ -81,6 +81,7 @@ module.exports.routes = {
   # books
   'get /admin/books' : 'BookController.list'
   'post /books': 'BookController.getBookList'
+  'get /siteProfile': 'BookController.getSiteProfile'
   # book-reader
   'get /ereader' : 'EreaderController.read'
 

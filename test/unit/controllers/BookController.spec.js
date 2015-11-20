@@ -9,27 +9,27 @@
 describe.only("about BookController =>", () => {
 
   /* ================================ before ================================ */
-  before(async (done) => {
+  // before(async (done) => {
 
     // simulate login
-    sinon.stub(UserService, 'getLoginState', (req) => {
-      return true;
-    });
+    // sinon.stub(UserService, 'getLoginState', (req) => {
+    //   return true;
+    // });
 
     // get pre-built product/prouctGm infos
     // testProduct = await testData.import();
 
-    done();
-  });
+    // done();
+  // });
 
   /* ================================ after ================================= */
-  after((done) => {
+  // after((done) => {
 
     // simulated loginout
-    UserService.getLoginState.restore();
+    // UserService.getLoginState.restore();
 
-    done();
-  });
+    // done();
+  // });
 
   /* ============================== start test ============================== */
   // list all
@@ -57,6 +57,18 @@ describe.only("about BookController =>", () => {
         book.name.should.be.string;
       });
       done(err);
+    });
+  });
+
+  it.only('showing SiteProfiles', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/siteProfile?domain=akoobe.e7read.com`)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      res.statusCode.should.equal(200);
+        done(err);
     });
   });
   // end list all

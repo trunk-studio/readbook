@@ -72,7 +72,7 @@ module.exports.policies = {
   'PromotionController':
     create: []
 
-  'Bookcontroller': ['global']
+  'Bookcontroller': []
 
 
   'EreaderController': ['global']
