@@ -77,7 +77,11 @@ module.exports = {
         }
       });
       sails.log.info("=== booksList ===",profile);
-      return res.ok(profile.Site.SiteProfile);
+      let result = {
+        profile: profile.Site.SiteProfile,
+        domain: "http://"+date.domain+":"+sails.config.port
+      }
+      return res.ok(result);
     } catch (e) {
       sails.log.error(e);
       let msg = e.message;
