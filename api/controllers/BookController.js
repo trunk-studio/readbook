@@ -59,6 +59,34 @@ module.exports = {
       let msg = e.message;
       return res.serverError(e, {type: 'json'});
     }
+  },
+
+  getSiteProfile: async(req, res) =>{
+    try {
+      let date = req.query;
+      sails.log.info("=== date ===",req.query);
+      let profile = await db.Host.findOne({
+        where:{
+          host: date.domain
+        },
+        include:{
+          model: db.Site,
+          include:{
+            model: db.SiteProfile
+          }
+        }
+      });
+      sails.log.info("=== booksList ===",profile);
+      let result = {
+        profile: profile.Site.SiteProfile,
+        domain: "http://"+date.domain+":"+sails.config.port
+      }
+      return res.ok(result);
+    } catch (e) {
+      sails.log.error(e);
+      let msg = e.message;
+      return res.serverError(e, {type: 'json'});
+    }
   }
 
 }

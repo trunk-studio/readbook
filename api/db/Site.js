@@ -50,6 +50,7 @@ module.exports = function(sequelize, DataTypes) {
                 Site.belongsToMany(models.Book, {
                     through: 'SiteBook'
                 });
+                Site.belongsTo(models.SiteProfile);
                 return
             }
         }
