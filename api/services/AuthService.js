@@ -21,7 +21,7 @@ module.exports = {
       await user.save();
 
       let domain = `http://${host}:${sails.config.port}`;
-      let link = `${domain}/newPassword?email=${email}&forgotToken=${user.forgotToken}&host=http://${host}/app/`;
+      let link = `${domain}/newPassword?email=${email}&forgotToken=${user.forgotToken}&host=http://${host}/app/newPassword.html`;
       console.log("newPasswordLink : ",link);
 
       let messageConfig = await CustomMailerService.checkForgotPasswordMail({user, link});

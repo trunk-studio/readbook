@@ -94,7 +94,6 @@ module.exports.mail = {
         <a href='%(link)s'>Click Me</a><br><br>
         若不是您，您可以選擇忽略此封郵件。<br><br>
         感謝您！<br>
-        %(storeName)s
       </blockquote>
       """
     },
@@ -108,7 +107,6 @@ module.exports.mail = {
         請妥善保管下列密碼並儘速更換。<br><br>
         新密碼為：<p style="color:red">%(password)s</p><br><br>
         感謝您！<br>
-        %(storeName)s
       </blockquote>
       """
     },
