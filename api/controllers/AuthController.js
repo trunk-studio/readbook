@@ -160,11 +160,12 @@ AuthController = {
   forgotPassword: async (req, res )=>{
     try {
       let data = req.query;
-      let check = await AuthService.sendForgotMail(data.email);
+      sails.log.info(data);
+      let check = await AuthService.sendForgotMail(data.email,data.domain);
       let message = '已寄出mail，請至信箱確認';
       return res.ok(message);
     } catch (e) {
-      console.error(e.stack);
+      sails.log.error(e.stack);
       let {message} = e;
       let success = false;
       return res.json(500,{message, success});
@@ -173,13 +174,14 @@ AuthController = {
   newPassword: async (req, res )=>{
     try {
       let data = req.query;
+      sails.log.info(data);
       await AuthService.changeForgotPassword(data);
-      return res.redirect("/shop/products");
+      return res.redirect(data.host);
     } catch (e) {
-      console.error(e.stack);
+      sails.log.error(e.stack);
       let {message} = e;
       let success = false;
-      return res.redirect("/shop/products");
+      return res.redirect(data.host);
     }
   },
 };

@@ -6,7 +6,7 @@
   // import test data foler
   let testData = require('./testData/books.js');
 
-describe.only("about BookController =>", () => {
+describe("about BookController =>", () => {
 
   /* ================================ before ================================ */
   // before(async (done) => {
@@ -60,7 +60,7 @@ describe.only("about BookController =>", () => {
     });
   });
 
-  it.only('showing SiteProfiles', (done) => {
+  it('showing SiteProfiles', (done) => {
     request(sails.hooks.http.app)
     .get(`/siteProfile?domain=akoobe.e7read.com`)
     .end((err, res) => {

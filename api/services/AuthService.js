@@ -1,14 +1,27 @@
 import crypto from 'crypto';
 
 module.exports = {
-  sendForgotMail : async (email) => {
+  sendForgotMail : async (email,host) => {
     try {
-      let user = await db.User.findOne({where:{email}});
+      sails.log("!!!!!",email,host);
+
+      let findHost = await db.Host.findOne({
+        where:{
+          host
+        }
+      });
+
+      let user = await db.User.findOne({
+        where:{
+          email,
+          SiteId: findHost.SiteId
+        }
+      });
       user.forgotToken = crypto.randomBytes(32).toString('hex').substr(0, 20);
       await user.save();
 
-      let domain = sails.config.domain || process.env.domain || 'http://localhost:1337';
-      let link = `${domain}/newPassword?email=${email}&forgotToken=${user.forgotToken}`;
+      let domain = `http://${host}:${sails.config.port}`;
+      let link = `${domain}/newPassword?email=${email}&forgotToken=${user.forgotToken}&host=http://${host}/app/`;
       console.log("newPasswordLink : ",link);
 
       let messageConfig = await CustomMailerService.checkForgotPasswordMail({user, link});
@@ -17,6 +30,7 @@ module.exports = {
 
       return {user, message};
     } catch (e) {
+      sails.log.error(e);
       throw e;
     }
   },
@@ -32,7 +46,7 @@ module.exports = {
       });
       user.forgotToken = crypto.randomBytes(32).toString('hex').substr(0, 20);
       await user.save();
-      
+
       let passport = await db.Passport.findOne({
         where:{
           UserId: user.id

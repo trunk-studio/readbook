@@ -1,11 +1,39 @@
 import sinon from 'sinon';
 
-describe("about forgot password", () => {
+describe.only("about forgot password", () => {
   let testUser ,passport,testUser2,passport2,createdTest2;
+  let host;
   before(async (done) => {
     sinon.stub(UserService, 'getLoginState', (req) => {
       return true;
     });
+
+    let siteProfile = {
+			"TenantProfileId": 7,
+			"TenantId": 7,
+			"ViewerLoginImageUrl": "/login/7.png"
+		};
+    siteProfile = await db.SiteProfile.create(siteProfile);
+
+    let site = {
+			"tenantId": 7,
+			"serviceKind": "BLOB",
+			"name": "BLOB",
+			"merchantId": 18,
+			"domainName": "BLOB",
+			"privateDomainName": "BLOB",
+			"isAbloition": 0,
+			"lastUpdatedUserId": "BLOB",
+			"remark": null,
+			"SiteProfileId": siteProfile.id
+    }
+    site = await db.Site.create(site);
+
+    host ={
+			"host": "akoobe.e7read.com",
+			"SiteId": site.id
+    }
+    host = await db.Host.create(host);
 
     var roleUser = {
       authority: 'user',
@@ -23,7 +51,8 @@ describe("about forgot password", () => {
       city: "基隆市",
       region: "仁愛區",
       zipcode: 200,
-      RoleId: createRoleUser.id
+      RoleId: createRoleUser.id,
+      "SiteId": site.id
     };
     let userOptions = {where: {username: testUser.username}, defaults: testUser}
     let createdTest = (await db.User.findOrCreate(userOptions))[0];
@@ -46,7 +75,8 @@ describe("about forgot password", () => {
       region: "仁愛區",
       zipcode: 200,
       forgotToken: '12345678901234567890',
-      RoleId: createRoleUser.id
+      RoleId: createRoleUser.id,
+      "SiteId": site.id
     };
     let userOptions2 = {where: {username: testUser2.username}, defaults: testUser2}
     createdTest2 = (await db.User.findOrCreate(userOptions2))[0];
@@ -70,7 +100,7 @@ describe("about forgot password", () => {
 
   it('forgot', async (done) => {
     try {
-      let result = await AuthService.sendForgotMail(testUser.email);
+      let result = await AuthService.sendForgotMail(testUser.email,host.host);
       result.user.forgotToken.should.be.String;
       result.message.to.should.be.equal(testUser.email);
       done();
@@ -82,7 +112,7 @@ describe("about forgot password", () => {
 
   it('email Not fount', async (done) => {
     try {
-      let result = await AuthService.sendForgotMail('123'+testUser.email);
+      let result = await AuthService.sendForgotMail('123'+testUser.email,host.host);
       done(new Error('should not pass!'));
     } catch (e) {
       console.log(e);
