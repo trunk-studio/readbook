@@ -1,6 +1,6 @@
 import sinon from 'sinon';
 
-describe.only("about forgot password", () => {
+describe("about forgot password", () => {
   let testUser ,passport,testUser2,passport2,createdTest2;
   let host;
   before(async (done) => {
