@@ -3,7 +3,6 @@ import crypto from 'crypto';
 module.exports = {
   sendForgotMail : async (email,host) => {
     try {
-      sails.log("!!!!!",email,host);
 
       let findHost = await db.Host.findOne({
         where:{
