@@ -183,5 +183,21 @@ module.exports = {
     }
   },
 
+  updateCover: async (books) => {
+    try {
+      await* books.map(async (book) =>{
+        let bookId = book.eBookGuid;
+        let s3 = 'https://s3-ap-northeast-1.amazonaws.com/koobe-e7read/cover';
+        let layer = bookId.charAt(0)+'/'+bookId.charAt(1)+'/'+bookId.charAt(2);
+        let url = s3+'/'+layer+'/'+bookId +'/'+ bookId +'.jpg';
+        book.cover = url.toLowerCase();
+        await book.save();
+      });
+
+    } catch (e) {
+      return console.error(e.stack)
+    }
+  }
+
   // end
 };

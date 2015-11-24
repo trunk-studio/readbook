@@ -1,7 +1,6 @@
 
 module.exports = (sequelize, DataTypes) ->
     User = sequelize.define('User', {
-
         #
         id:
             type: DataTypes.UUID,
@@ -50,6 +49,7 @@ module.exports = (sequelize, DataTypes) ->
         address: DataTypes.STRING
         comment: DataTypes.STRING
         orderSyncToken: DataTypes.STRING
+        forgotToken: DataTypes.STRING
         admin:
             type: DataTypes.BOOLEAN
             defaultValue: false

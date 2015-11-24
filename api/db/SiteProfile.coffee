@@ -96,6 +96,7 @@ module.exports = (sequelize, DataTypes) ->
       type: DataTypes.BOOLEAN
       defaultValue: false
     }
+    ContactInfo: DataTypes.STRING
   },
   paranoid: true,
   classMethods: associate: (models) ->

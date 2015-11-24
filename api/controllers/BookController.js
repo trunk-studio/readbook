@@ -44,7 +44,13 @@ module.exports = {
   getBookList: async(req, res) =>{
     try {
       let date = req.body;
-      let books = await db.Book.findAll({
+
+      let isShouldUpdateCover = await db.Book.findAll({
+        where:{
+          makingStatus: 2,
+          cover: null
+        },
+        order: 'name',
         include:{
           model: db.Site,
           where:{
@@ -52,7 +58,24 @@ module.exports = {
           }
         }
       });
-      sails.log.info("=== booksList ===",books);
+
+      if(isShouldUpdateCover.length > 0)
+        await BookService.updateCover(isShouldUpdateCover);
+
+      let books = await db.Book.findAll({
+        where:{
+          makingStatus: 2
+        },
+        order: 'name',
+        include:{
+          model: db.Site,
+          where:{
+            id: date.Site.id
+          }
+        }
+      });
+
+      // sails.log.info("=== booksList ===",books);
       return res.ok(books);
     } catch (e) {
       sails.log.error(e);

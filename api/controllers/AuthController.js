@@ -155,7 +155,35 @@ AuthController = {
   },
   disconnect: function(req, res) {
     passport.disconnect(req, res);
-  }
+  },
+
+  forgotPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      sails.log.info(data);
+      let check = await AuthService.sendForgotMail(data.email,data.domain);
+      let message = '已寄出mail，請至信箱確認';
+      return res.ok(message);
+    } catch (e) {
+      sails.log.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.json(500,{message, success});
+    }
+  },
+  newPassword: async (req, res )=>{
+    try {
+      let data = req.query;
+      sails.log.info(data);
+      await AuthService.changeForgotPassword(data);
+      return res.redirect(data.host);
+    } catch (e) {
+      sails.log.error(e.stack);
+      let {message} = e;
+      let success = false;
+      return res.redirect(data.host);
+    }
+  },
 };
 
 module.exports = AuthController;
