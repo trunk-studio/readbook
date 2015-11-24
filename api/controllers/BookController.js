@@ -45,6 +45,10 @@ module.exports = {
     try {
       let date = req.body;
       let books = await db.Book.findAll({
+        where:{
+          makingStatus: 2
+        },
+        order: 'name',
         include:{
           model: db.Site,
           where:{
