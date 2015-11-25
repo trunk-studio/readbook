@@ -169,6 +169,7 @@ module.exports = {
           eBookGuid: eBookGuid.toUpperCase(),
           isS3Ready: 0
         },
+        attributes: ['id','isS3Ready', 'totalPages','totalPageNumber'],
         include:{
           model: db.Site,
           where:{
@@ -176,18 +177,22 @@ module.exports = {
           }
         }
       });
+      delete book.dataValues.Sites;
 
-      book.isS3Ready = data.isS3Ready;
+      book.isS3Ready = parseInt(data.isS3Ready,10);
       book.totalPages = data.totalPages;
       book.totalPageNumber = data.totalPages;
       book = await book.save();
 
       // sails.log.info("=== booksList ===",book);
-      return res.ok(book);
+      return res.ok({status:'success',book});
     } catch (e) {
       sails.log.error(e);
-      let msg = e.message;
-      return res.serverError(e, {type: 'json'});
+      let msg = {
+        status: 'fail',
+        msg: e.message
+      }
+      return res.serverError(msg, {type: 'json'});
     }
   }
 
