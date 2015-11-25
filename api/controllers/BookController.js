@@ -155,7 +155,6 @@ module.exports = {
     try {
       let eBookGuid = req.param('eBookGuid');
       let data = req.query;
-      sails.log.info("!!!!",eBookGuid,data);
       let domain = await BookService.extractDomain(req.get('host'));
 
       let host =await db.Host.findOne({
