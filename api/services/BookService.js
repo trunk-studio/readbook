@@ -2,7 +2,6 @@ import moment from "moment";
 import fs from 'fs';
 import mime from "mime";
 import util from "util";
-import sig from "amazon-s3-url-signer";
 
 module.exports = {
 
