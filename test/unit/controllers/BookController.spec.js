@@ -72,7 +72,7 @@ describe("about BookController =>", () => {
     });
   });
 
-  it.only('showing SiteProfiles', (done) => {
+  it('showing SiteProfiles', (done) => {
     request(sails.hooks.http.app)
     .get(`/api/listAllBooksForCooking`)
     .end((err, res) => {
