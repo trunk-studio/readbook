@@ -48,6 +48,7 @@ module.exports = {
       let isShouldUpdateCover = await db.Book.findAll({
         where:{
           makingStatus: 2,
+          isS3Ready: 1,
           cover: null
         },
         order: 'name',
@@ -64,7 +65,8 @@ module.exports = {
 
       let books = await db.Book.findAll({
         where:{
-          makingStatus: 2
+          makingStatus: 2,
+          isS3Ready: 1
         },
         order: 'name',
         include:{
@@ -109,6 +111,87 @@ module.exports = {
       sails.log.error(e);
       let msg = e.message;
       return res.serverError(e, {type: 'json'});
+    }
+  },
+
+  listAllBooksForCooking: async(req, res) =>{
+    try {
+      let domain = await BookService.extractDomain(req.get('host'));
+      let host =await db.Host.findOne({
+        where:{
+          host: domain
+        }
+      });
+
+      let books = await db.Book.findAll({
+        where:{
+          makingStatus: 2,
+          isS3Ready: 0
+        },
+        attributes: ['eBookGuid', 'name'],
+        order: 'name',
+        include:{
+          model: db.Site,
+          where:{
+            id: host.SiteId
+          }
+        }
+      });
+
+      for(let i = 0; i < books.length; i++) {
+        delete books[i].dataValues.Sites;
+      }
+
+      // sails.log.info("=== booksList ===",books);
+      return res.ok(books);
+    } catch (e) {
+      sails.log.error(e);
+      let msg = e.message;
+      return res.serverError(e, {type: 'json'});
+    }
+  },
+
+  updateBookStatus: async(req, res) =>{
+    try {
+      let eBookGuid = req.param('eBookGuid');
+      let data = req.query;
+      let domain = await BookService.extractDomain(req.get('host'));
+
+      let host =await db.Host.findOne({
+        where:{
+          host: domain
+        }
+      });
+
+      let book= await db.Book.findOne({
+        where:{
+          eBookGuid: eBookGuid.toUpperCase(),
+          isS3Ready: 0
+        },
+        attributes: ['id','isS3Ready', 'totalPages','totalPageNumber'],
+        include:{
+          model: db.Site,
+          where:{
+            id: host.SiteId
+          }
+        }
+      });
+      delete book.dataValues.Sites;
+
+      book.isS3Ready = parseInt(data.isS3Ready,10);
+      book.totalPages = data.totalPages;
+      book.totalPageNumber = data.totalPages;
+      book = await book.save();
+
+      // sails.log.info("=== booksList ===",book);
+      return res.ok({status:'success',book});
+    } catch (e) {
+      sails.log.error(e);
+      let msg = {
+        status: 'fail',
+        msg: e.message
+      }
+      return res.serverError(msg, {type: 'json'});
     }
   }
 

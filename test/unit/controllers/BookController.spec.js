@@ -71,6 +71,18 @@ describe("about BookController =>", () => {
         done(err);
     });
   });
+
+  it.only('showing SiteProfiles', (done) => {
+    request(sails.hooks.http.app)
+    .get(`/api/listAllBooksForCooking`)
+    .end((err, res) => {
+      if (res.statusCode === 500) {
+        return done(body)
+      }
+      res.statusCode.should.equal(200);
+        done(err);
+    });
+  });
   // end list all
 
 

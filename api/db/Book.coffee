@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) ->
             type: DataTypes.INTEGER
             defaultValue: 0
         }
+        isS3Ready:{
+            type: DataTypes.BOOLEAN
+            defaultValue: false
+        }
         collationStatus:{
             type: DataTypes.INTEGER
             defaultValue: 0
