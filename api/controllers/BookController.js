@@ -116,33 +116,23 @@ module.exports = {
 
   listAllBooksForCooking: async(req, res) =>{
     try {
-      let domain = await BookService.extractDomain(req.get('host'));
-      let host =await db.Host.findOne({
-        where:{
-          host: domain
-        }
-      });
-
-      let books = await db.Book.findAll({
-        where:{
-          makingStatus: 2,
-          isS3Ready: 0
-        },
-        attributes: ['eBookGuid', 'name'],
-        order: 'name',
-        include:{
-          model: db.Site,
-          where:{
-            id: host.SiteId
-          }
-        }
-      });
-
-      for(let i = 0; i < books.length; i++) {
-        delete books[i].dataValues.Sites;
-      }
-
+      let books = await BookService.listAllBooksForCooking(req);
       // sails.log.info("=== booksList ===",books);
+      return res.ok(books);
+    } catch (e) {
+      sails.log.error(e);
+      let msg = e.message;
+      return res.serverError(e, {type: 'json'});
+    }
+  },
+
+  listAllBooksForCookingTsv: async(req, res) =>{
+    try {
+
+      let books = await BookService.listAllBooksForCooking(req);
+      books = await BookService.ConvertToTSV(books);
+      sails.log.info("=== booksList ===",books);
+      res.set('Content-Type', 'text/plain');
       return res.ok(books);
     } catch (e) {
       sails.log.error(e);

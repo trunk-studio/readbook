@@ -44,4 +44,11 @@ module.exports = {
   i18n: {
     localesDirectory: '/config/locales'
   }
+  S3:{
+    id:'',
+    key: ''
+    options:{
+      host: 's3-ap-northeast-1.amazonaws.com'
+    }
+  }
 }

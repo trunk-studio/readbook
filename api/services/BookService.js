@@ -213,6 +213,59 @@ module.exports = {
     } catch (e) {
       return console.error(e.stack)
     }
+  },
+
+  ConvertToTSV: async(objArray) => {
+    try {
+      objArray = JSON.stringify(objArray);
+      let array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+      let str = '';
+
+      for (let i = 0; i < array.length; i++) {
+        let line = '';
+        for (let index in array[i]) {
+          if (line != '') line += '\t'
+          line += array[i][index];
+        }
+        str += line + '\n';
+      }
+      return str;
+    } catch (e) {
+      return console.error(e.stack)
+    }
+  },
+
+  listAllBooksForCooking: async(req) => {
+    try {
+      let domain = await BookService.extractDomain(req.get('host'));
+      let host =await db.Host.findOne({
+        where:{
+          host: domain
+        }
+      });
+
+      let books = await db.Book.findAll({
+        where:{
+          makingStatus: 2,
+          isS3Ready: 0
+        },
+        attributes: ['eBookGuid', 'name'],
+        order: 'name',
+        include:{
+          model: db.Site,
+          where:{
+            id: host.SiteId
+          }
+        }
+      });
+
+      for(let i = 0; i < books.length; i++) {
+        delete books[i].dataValues.Sites;
+      }
+      return books;
+    } catch (e) {
+      return console.error(e.stack)
+    }
   }
   // end
 };
