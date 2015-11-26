@@ -168,7 +168,7 @@ module.exports = {
         status: 'fail',
         msg: e.message
       }
-      return res.ok(msg, {type: 'json'});
+      return res.ok(msg);
     }
   }
 
