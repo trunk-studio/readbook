@@ -189,7 +189,7 @@ module.exports = {
         let bookId = book.eBookGuid;
         let s3 = 'https://s3-ap-northeast-1.amazonaws.com/koobe-e7read/cover';
         let layer = bookId.charAt(0)+'/'+bookId.charAt(1)+'/'+bookId.charAt(2);
-        let url = s3+'/'+layer+'/'+bookId +'/'+ bookId +'.jpg';
+        let url = s3+'/'+layer+'/'+bookId +'/'+ cover +'.jpg';
         book.cover = url.toLowerCase();
         await book.save();
       });
