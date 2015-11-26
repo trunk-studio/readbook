@@ -187,10 +187,10 @@ module.exports = {
     try {
       await* books.map(async (book) =>{
         let bookId = book.eBookGuid;
-        let s3 = 'https://s3-ap-northeast-1.amazonaws.com/koobe-e7read/cover';
         let layer = bookId.charAt(0)+'/'+bookId.charAt(1)+'/'+bookId.charAt(2);
-        let url = s3+'/'+layer+'/'+bookId +'/cover.jpg';
-        book.cover = url.toLowerCase();
+        let path = '/book/'+layer+'/'+bookId +'/cover.jpg';
+        let url =  await S3Service.getS3Url(path.toLowerCase());
+        book.cover = url;
         await book.save();
       });
 

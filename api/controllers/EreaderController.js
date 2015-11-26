@@ -13,10 +13,7 @@ module.exports = {
 
       // make a fake book
 
-      let fileLocation = '/images/ereader';
-
-
-      let layer = query.id.charAt(0)+'/'+query.id.charAt(1)+'/'+query.id.charAt(2);
+      let path = '/book/'+query.id.charAt(0)+'/'+query.id.charAt(1)+'/'+query.id.charAt(2)+'/'+query.id+'/pages/';
 
       // merge-file-name-location-to-book-array
       var pages = [];
@@ -28,9 +25,10 @@ module.exports = {
         return str;
       }
 
-      for (var i = 0; i <= totalPages-1; i++) {
-        let url = fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg';
-        pages.push({index: i-1, url: url.toLowerCase()});
+      for (var i = 1; i <= pageTotal; i++) {
+        let s3Path = path + i +'.jpg';
+        let url =  await S3Service.getS3Url(s3Path.toLowerCase());
+        pages.push({index: i-1, url: url});
       }
 
       // marge output
