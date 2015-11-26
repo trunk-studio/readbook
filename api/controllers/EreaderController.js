@@ -14,6 +14,8 @@ module.exports = {
       // make a fake book
 
       let fileLocation = '/images/ereader';
+
+
       let layer = query.id.charAt(0)+'/'+query.id.charAt(1)+'/'+query.id.charAt(2);
 
       // merge-file-name-location-to-book-array
@@ -25,8 +27,8 @@ module.exports = {
         }
         return str;
       }
-      
-      for (var i = 0; i <= pageTotal-1; i++) {
+
+      for (var i = 0; i <= totalPages-1; i++) {
         let url = fileLocation+'/'+layer+'/'+query.id +'/'+ query.id +'-'+ i +'.jpg';
         pages.push({index: i-1, url: url.toLowerCase()});
       }
