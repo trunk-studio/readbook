@@ -27,7 +27,7 @@ module.exports = {
 
       for (var i = 1; i <= pageTotal; i++) {
         let s3Path = path + i +'.jpg';
-        let url =  await S3Service.getS3Url(s3Path.toLowerCase());
+        let url =  await S3Service.getS3Url(s3Path.toLowerCase(),90);
         pages.push({index: i-1, url: url});
       }
 
