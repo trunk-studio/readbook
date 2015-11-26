@@ -145,13 +145,6 @@ module.exports = {
     try {
       let eBookGuid = req.param('eBookGuid');
       let data = req.query;
-      let domain = await BookService.extractDomain(req.get('host'));
-
-      let host =await db.Host.findOne({
-        where:{
-          host: domain
-        }
-      });
 
       let book= await db.Book.findOne({
         where:{
@@ -159,12 +152,6 @@ module.exports = {
           isS3Ready: 0
         },
         attributes: ['id','isS3Ready', 'totalPages','totalPageNumber'],
-        include:{
-          model: db.Site,
-          where:{
-            id: host.SiteId
-          }
-        }
       });
       delete book.dataValues.Sites;
 
