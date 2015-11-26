@@ -86,6 +86,7 @@ module.exports = {
       });
       sails.log.info("=== booksList ===",profile);
       let result = {
+        site: profile.Site,
         profile: profile.Site.SiteProfile,
         domain: "http://"+date.domain+":"+sails.config.port
       }
