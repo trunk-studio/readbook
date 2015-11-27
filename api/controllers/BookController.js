@@ -45,24 +45,6 @@ module.exports = {
     try {
       let date = req.body;
 
-      let isShouldUpdateCover = await db.Book.findAll({
-        where:{
-          makingStatus: 2,
-          isS3Ready: 1,
-          cover: null
-        },
-        order: 'name',
-        include:{
-          model: db.Site,
-          where:{
-            id: date.Site.id
-          }
-        }
-      });
-
-      if(isShouldUpdateCover.length > 0)
-        await BookService.updateCover(isShouldUpdateCover);
-
       let books = await db.Book.findAll({
         where:{
           makingStatus: 2,
@@ -77,6 +59,7 @@ module.exports = {
         }
       });
 
+      books = await BookService.updateCover(books);
       // sails.log.info("=== booksList ===",books);
       return res.ok(books);
     } catch (e) {
@@ -103,6 +86,7 @@ module.exports = {
       });
       sails.log.info("=== booksList ===",profile);
       let result = {
+        site: profile.Site,
         profile: profile.Site.SiteProfile,
         domain: "http://"+date.domain+":"+sails.config.port
       }

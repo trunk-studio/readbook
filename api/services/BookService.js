@@ -185,15 +185,16 @@ module.exports = {
 
   updateCover: async (books) => {
     try {
-      await* books.map(async (book) =>{
+      let booklist = await* books.map(async (book) =>{
         let bookId = book.eBookGuid;
         let layer = bookId.charAt(0)+'/'+bookId.charAt(1)+'/'+bookId.charAt(2);
         let path = '/book/'+layer+'/'+bookId +'/cover.jpg';
-        let url =  await S3Service.getS3Url(path.toLowerCase());
+        let url =  await S3Service.getS3Url(path.toLowerCase(),10);
         book.cover = url;
-        await book.save();
+        return book;
       });
 
+      return booklist;
     } catch (e) {
       return console.error(e.stack)
     }
