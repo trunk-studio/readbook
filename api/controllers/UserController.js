@@ -107,6 +107,9 @@ let UserController = {
         loginUser = req.body.user;
       }
 
+      if(loginUser.loginId == 'demo' || loginUser.username == 'demo')
+        throw new Error ('demo帳號禁止更換密碼');
+
       if(updateUser.password != updateUser.checkPassword)
         throw new Error ('密碼錯誤');
 
