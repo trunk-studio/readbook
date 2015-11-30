@@ -10,23 +10,23 @@ let moment = require("moment");
 
 let UserController = {
 
-  favorite: async (req, res) => {
-
-    var FAV_KEY = "picklete_fav";
-    var favoriteKeys = req.cookies[FAV_KEY];
-    try {
-      favoriteKeys = JSON.parse(favoriteKeys);
-    } catch (e) {
-      favoriteKeys = null;
-      return res.view("main/memberFavorite", {products: []});
-    }
-
-    let products = await ProductService.findFavorite(favoriteKeys);
-
-    res.view("main/memberFavorite", {
-      products
-    });
-  },
+  // favorite: async (req, res) => {
+  //
+  //   var FAV_KEY = "picklete_fav";
+  //   var favoriteKeys = req.cookies[FAV_KEY];
+  //   try {
+  //     favoriteKeys = JSON.parse(favoriteKeys);
+  //   } catch (e) {
+  //     favoriteKeys = null;
+  //     return res.view("main/memberFavorite", {products: []});
+  //   }
+  //
+  //   let products = await ProductService.findFavorite(favoriteKeys);
+  //
+  //   res.view("main/memberFavorite", {
+  //     products
+  //   });
+  // },
 
   loginStatus: async(req, res) => {
     try {
@@ -40,42 +40,42 @@ let UserController = {
     }
   },
 
-  cart: async (req, res) => {
-    console.log('=== req.cookies ===', req.cookies.picklete_cart);
-
-    let picklete_cart = req.cookies.picklete_cart;
-    let paymentTotalAmount = 0;
-
-    if(picklete_cart != undefined){
-      picklete_cart = JSON.parse(picklete_cart);
-
-      picklete_cart.orderItems.forEach( (orderItem) => {
-        paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
-      });
-    }
-
-
-
-    let company = await db.Company.findOne();
-    let brands = await db.Brand.findAll();
-
-    let date = new Date();
-    let query = {date, paymentTotalAmount};
-    let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
-    console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
-
-    // add an item for Shippings(運費) by kuyen
-    let shippings = await ShippingService.findAll();
-    // console.log('=== shippings ==>',shippings);
-    let paymentMethod = sails.config.allpay.paymentMethod;
-    return res.view('main/cart', {
-      company,
-      brands,
-      additionalPurchaseProductGms,
-      shippings,
-      paymentMethod
-    });
-  },
+  // cart: async (req, res) => {
+  //   console.log('=== req.cookies ===', req.cookies.picklete_cart);
+  //
+  //   let picklete_cart = req.cookies.picklete_cart;
+  //   let paymentTotalAmount = 0;
+  //
+  //   if(picklete_cart != undefined){
+  //     picklete_cart = JSON.parse(picklete_cart);
+  //
+  //     picklete_cart.orderItems.forEach( (orderItem) => {
+  //       paymentTotalAmount += parseInt(orderItem.quantity, 10) * parseInt(orderItem.price, 10);
+  //     });
+  //   }
+  //
+  //
+  //
+  //   let company = await db.Company.findOne();
+  //   let brands = await db.Brand.findAll();
+  //
+  //   let date = new Date();
+  //   let query = {date, paymentTotalAmount};
+  //   let additionalPurchaseProductGms = await AdditionalPurchaseService.getProductGms(query);
+  //   console.log('=== additionalPurchaseProducts ===', additionalPurchaseProductGms);
+  //
+  //   // add an item for Shippings(運費) by kuyen
+  //   let shippings = await ShippingService.findAll();
+  //   // console.log('=== shippings ==>',shippings);
+  //   let paymentMethod = sails.config.allpay.paymentMethod;
+  //   return res.view('main/cart', {
+  //     company,
+  //     brands,
+  //     additionalPurchaseProductGms,
+  //     shippings,
+  //     paymentMethod
+  //   });
+  // },
 
   edit: async (req, res) => {
     let loginUser = UserService.getLoginUser(req);
@@ -302,13 +302,7 @@ let UserController = {
         offset: offset,
         limit: limit
       });
-
-      //查詢購物金
-      for (var i = 0; i < members.rows.length; i++) {
-        let member = members.rows[i];
-
-        member.totalBonusRemain = await UserService.calcTotalBonusRemain(member);
-      }
+  
 
       res.view("user/controlMembers", {
         pageName: "members",

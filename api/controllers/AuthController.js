@@ -136,7 +136,7 @@ AuthController = {
         req.session.authenticated = true;
 
         if (user.Role != undefined && user.Role.authority == 'admin') {
-          return res.redirect('/admin/goods');
+          return res.redirect('/admin/books');
         }
 
         console.log('=== user.Role ===', user);
