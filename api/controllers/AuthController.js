@@ -139,12 +139,16 @@ AuthController = {
           return res.redirect('/admin/books');
         }
 
-        console.log('=== user.Role ===', user);
+        console.log('=== user.Role ===', user.Site.domainName.split('.')[0]);
+        let status =  "ok";
+        let site = user.Site.domainName.split('.')[0];
+        if(user.password == site + '.' + user.username + '000')
+          status = 'first'
 
         sails.log.info("ok!!");
         if (req.xhr)
           return res.ok({
-            status: "ok",
+            status,
             message: "login success",
             user
           });
