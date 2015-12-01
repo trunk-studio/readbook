@@ -60,7 +60,7 @@ module.exports = {
     return users;
   },
 
-  calcTotalBonusRemain: async (user) => {
+  // calcTotalBonusRemain: async (user) => {
     /*
     let result = 0;
 
@@ -77,12 +77,12 @@ module.exports = {
     }
     */
 
-    return await db.BonusPoint.sum('remain', {
-      where: {
-        email: user.email
-      }
-    });
-  }
+  //   return await db.BonusPoint.sum('remain', {
+  //     where: {
+  //       email: user.email
+  //     }
+  //   });
+  // }
 
   /*
     marked below codes jsut in case,

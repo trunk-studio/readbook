@@ -72,9 +72,6 @@ module.exports = (sequelize, DataTypes) ->
       classMethods: associate: (models) ->
         User.belongsTo models.Role
         User.belongsToMany(models.Like, {through: 'UserLike'});
-        User.belongsToMany(models.Product, {through: 'UserFavorite'})
-        User.belongsToMany(models.ShopCode, {through: 'userShopCode'})
-
         User.belongsTo(models.Site)
         User.belongsToMany(models.Group, {through: 'GroupUser'})
 
