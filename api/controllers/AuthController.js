@@ -139,7 +139,7 @@ AuthController = {
           return res.redirect('/admin/books');
         }
 
-        console.log('=== user.Role ===', user.Site.domainName.split('.')[0]);
+        console.log('=== user.Role ===', user);
         let status =  "ok";
         let site = user.Site.domainName.split('.')[0];
         if(user.password == site + '.' + user.username + '000')
