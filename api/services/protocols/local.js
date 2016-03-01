@@ -119,8 +119,6 @@ exports.login = async function(req, identifier, password, next) {
     include: [{
       model: db.Role
     },{
-      model: db.Like
-    },{
       model: db.Site,
       where:{
         id: host.SiteId
