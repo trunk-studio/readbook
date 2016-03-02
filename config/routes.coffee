@@ -46,6 +46,7 @@ module.exports.routes = {
   # password
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
+  'post /member/update' : 'UserController.update'
 
   # books
   'get /admin/books' : 'BookController.list'
@@ -80,7 +81,6 @@ module.exports.routes = {
   # 'get /FAQ' : 'FAQController.show'
   # 'get /member/purchase' : view: 'main/member-purchase'
   # 'get /member/setting' : 'UserController.edit'
-  # 'post /member/update' : 'UserController.update'
   #
   # 'get /user/loginStatus' : 'UserController.loginStatus'
 
