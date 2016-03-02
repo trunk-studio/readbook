@@ -10,13 +10,13 @@ module.exports = (req, res, next) ->
   # get user data
   res.locals.user = UserService.getLoginUser(req)
   console.log(res.locals.user);
-
+  next()
   # get company data and brand list
-  db.Company.findOne()
-  .then (result) ->
-    res.locals.company = result.dataValues;
-  .then () ->
-    db.Brand.findAll({order: 'weight ASC',})
-    .then (brands) ->
-      res.locals.brands = brands;
-      next()
+  # db.Company.findOne()
+  # .then (result) ->
+  #   res.locals.company = result.dataValues;
+  # .then () ->
+  #   db.Brand.findAll({order: 'weight ASC',})
+  #   .then (brands) ->
+  #     res.locals.brands = brands;
+  #     next()

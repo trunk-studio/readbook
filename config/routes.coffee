@@ -46,6 +46,7 @@ module.exports.routes = {
   # password
   'get /admin/password' : 'UserController.password'
   'post /admin/password' : 'UserController.password'
+  'post /member/update' : 'UserController.update'
 
   # books
   'get /admin/books' : 'BookController.list'
@@ -59,40 +60,39 @@ module.exports.routes = {
 
 
 
-  'get /contact': 'ContactController.index'
-  'get /admin/about' : 'AboutController.create'
-  'post /admin/about' : 'AboutController.create'
+  # 'get /contact': 'ContactController.index'
+  # 'get /admin/about' : 'AboutController.create'
+  # 'post /admin/about' : 'AboutController.create'
+  #
+  # 'get /admin/FAQ' : 'FAQController.FAQ'
+  # 'get /admin/FAQAdd' : 'FAQController.FAQAdd'
+  # 'post /admin/FAQAdd' : 'FAQController.FAQAdd'
+  # 'get /admin/FAQUpdate' : 'FAQController.FAQUpdate'
+  # 'post /admin/FAQUpdate' : 'FAQController.FAQUpdate'
+  # 'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  # 'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
+  # 'post /admin/FAQDelete' : 'FAQController.FAQDelete'
+  # 'post /admin/FAQTypeDelete' : 'FAQController.FAQTypeDelete'
+  #
+  # 'get /admin/members' : 'UserController.controlMembers'
+  # 'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
 
-  'get /admin/FAQ' : 'FAQController.FAQ'
-  'get /admin/FAQAdd' : 'FAQController.FAQAdd'
-  'post /admin/FAQAdd' : 'FAQController.FAQAdd'
-  'get /admin/FAQUpdate' : 'FAQController.FAQUpdate'
-  'post /admin/FAQUpdate' : 'FAQController.FAQUpdate'
-  'get /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
-  'post /admin/FAQTypeUpdate' : 'FAQController.FAQTypeUpdate'
-  'post /admin/FAQDelete' : 'FAQController.FAQDelete'
-  'post /admin/FAQTypeDelete' : 'FAQController.FAQTypeDelete'
 
-  'get /admin/members' : 'UserController.controlMembers'
-  'get /admin/member-detail/:id' : 'UserController.controlMemberDetail'
-
-
-  'get /FAQ' : 'FAQController.show'
-  'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : 'UserController.edit'
-  'post /member/update' : 'UserController.update'
-
-  'get /user/loginStatus' : 'UserController.loginStatus'
+  # 'get /FAQ' : 'FAQController.show'
+  # 'get /member/purchase' : view: 'main/member-purchase'
+  # 'get /member/setting' : 'UserController.edit'
+  #
+  # 'get /user/loginStatus' : 'UserController.loginStatus'
 
   # client side / Have to login
   # 'get /member/fav' : view: 'main/member-fav'
-  'get /member/purchase' : view: 'main/member-purchase'
-  'get /member/setting' : 'UserController.edit'
-  'post /member/update' : 'UserController.update'
+  # 'get /member/purchase' : view: 'main/member-purchase'
+  # 'get /member/setting' : 'UserController.edit'
+  # 'post /member/update' : 'UserController.update'
 
   # client side / no need to login
-  'get /index' : 'MainController.index'
-  'get /about' : 'AboutController.show'
+  # 'get /index' : 'MainController.index'
+  # 'get /about' : 'AboutController.show'
 
   # 'get /admin/brand' : 'BrandController.list'
   # 'post /admin/brand' : 'BrandController.create'
