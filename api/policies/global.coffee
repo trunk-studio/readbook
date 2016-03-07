@@ -8,8 +8,8 @@ module.exports = (req, res, next) ->
   res.locals = res.locals or {}
 
   # get user data
-  res.locals.user = UserService.getLoginUser(req)
-  console.log(res.locals.user);
+  # res.locals.user = UserService.getLoginUser(req)
+  # console.log(res.locals.user);
   next()
   # get company data and brand list
   # db.Company.findOne()
