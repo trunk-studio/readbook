@@ -42,6 +42,7 @@ module.exports.routes = {
   'get /admin/' : 'AuthController.admin'
 
   # books
+  'get /rest/test/allowFrom' : 'TestController.testAllowFrom'
   'get /admin/books' : 'BookController.list'
   'post /books': 'BookController.getBookList'
   'get /siteProfile': 'BookController.getSiteProfile'
