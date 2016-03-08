@@ -72,6 +72,7 @@ module.exports = {
   getSiteProfile: async(req, res) =>{
     try {
       let date = req.query;
+      console.log("!!!!!!!!!!!!!!!!!!",req.connection.remoteAddress);
       sails.log.info("=== date ===",req.query);
       let profile = await db.Host.findOne({
         where:{
