@@ -21,6 +21,9 @@ module.exports = function(sequelize, DataTypes) {
         // merchantId
         merchantId: DataTypes.INTEGER,
 
+        // 允許 IP
+        allowFrom:  DataTypes.STRING,
+
         // 網域名
         domainName: DataTypes.STRING,
 
